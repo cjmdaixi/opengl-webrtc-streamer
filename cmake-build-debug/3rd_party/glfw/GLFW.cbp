@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="GLFW"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\3rd_party\;CMake Files\3rd_party\glfw\;CMake Files\3rd_party\glfw\CMake\;CMake Files\3rd_party\glfw\src\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="uninstall">
+				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 uninstall"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glfw">
+				<Option output="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_GLFW_USE_CONFIG_H"/>
+					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 glfw"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glfw/fast">
+				<Option output="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_GLFW_USE_CONFIG_H"/>
+					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 glfw/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include/GLFW/glfw3.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include/GLFW/glfw3native.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_init.m">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_joystick.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_joystick.m">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_monitor.m">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_platform.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_time.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_window.m">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/egl_context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/egl_context.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/init.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/input.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/internal.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/mappings.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/monitor.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/nsgl_context.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/nsgl_context.m">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/osmesa_context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/osmesa_context.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/posix_thread.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/posix_thread.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/vulkan.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/window.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/glfw_config.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\3rd_party\glfw\"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMake/cmake_uninstall.cmake.in">
+			<Option virtualFolder="CMake Files\3rd_party\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMake/glfw3.pc.in">
+			<Option virtualFolder="CMake Files\3rd_party\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMake/glfw3Config.cmake.in">
+			<Option virtualFolder="CMake Files\3rd_party\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\3rd_party\glfw\src\"/>
+		</Unit>
+		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/glfw_config.h.in">
+			<Option virtualFolder="CMake Files\3rd_party\glfw\src\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
