@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/install_manifest.txt\"")
+if (NOT EXISTS "/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/install_manifest.txt\"")
 endif()
 
-file(READ "/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/install_manifest.txt" files)
+file(READ "/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

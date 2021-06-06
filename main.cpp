@@ -1,15 +1,10 @@
 
 #include <glm/glm.hpp>
+#include<cstdio>
 #include "Camera.h"
 #include "Shader.h"
 #include <GLFW/glfw3.h>
-//#include <libavformat.h>
-
-extern "C"{
-#include <libavformat/libavformat.h>
-
-}
-
+#include <ctime>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -33,10 +28,10 @@ float lastFrame = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-void SetVedioEnv(){
+const char* cmd = "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s 800x600 -i - "
+                  "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
 
-}
-
+const char* ts = "ls *";
 int main()
 {
     // glfw: initialize and configure
@@ -147,10 +142,18 @@ int main()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    FILE* ffmpeg = popen(cmd, "w");
+    if(ffmpeg == NULL){
+        std::cerr<<"popen fails."<<std::endl;
+        return 0;
+    }
+    time_t now = time(NULL);
+    time_t time_limit = now+10;
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window) && now < time_limit)
     {
+        now = time(NULL);
         // per-frame time logic
         // --------------------
         float currentFrame = glfwGetTime();
@@ -184,6 +187,10 @@ int main()
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
+        GLfloat * buffer = new GLfloat[SCR_HEIGHT*SCR_HEIGHT*4];
+        glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
+        fwrite(buffer,sizeof(int)*SCR_WIDTH*SCR_HEIGHT,1,ffmpeg);
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
@@ -198,6 +205,10 @@ int main()
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
+    int status = fclose(ffmpeg);
+    if(status == -1){
+        std::cerr<<"close failed."<<std::endl;
+    }
     return 0;
 }
 

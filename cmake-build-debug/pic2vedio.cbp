@@ -8,267 +8,267 @@
 		<Option virtualFolders="CMake Files\;CMake Files\3rd_party\;CMake Files\3rd_party\glfw\;CMake Files\3rd_party\glfw\CMake\;CMake Files\3rd_party\glfw\src\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="install/local">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="install/strip">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/strip"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="install">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="list_install_components">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="pic2vedio">
-				<Option output="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/pic2vedio" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option output="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/pic2vedio" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glad/include"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glm"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/include"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glad/include"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glm"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 pic2vedio"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 pic2vedio"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="pic2vedio/fast">
-				<Option output="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/pic2vedio" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
+				<Option output="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/pic2vedio" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glad/include"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glm"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/include"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glad/include"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glm"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 pic2vedio/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 pic2vedio/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="uninstall">
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 uninstall"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 uninstall"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="glfw">
-				<Option output="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
+				<Option output="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-D_GLFW_USE_CONFIG_H"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 glfw"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 glfw"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="glfw/fast">
-				<Option output="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
+				<Option output="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-D_GLFW_USE_CONFIG_H"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src"/>
-					<Add directory="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src"/>
+					<Add directory="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 glfw/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 glfw/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glad/src/glad.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glad/src/glad.c">
 			<Option target="pic2vedio"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include/GLFW/glfw3.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/include/GLFW/glfw3.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/include/GLFW/glfw3native.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/include/GLFW/glfw3native.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_init.m">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_init.m">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_joystick.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_joystick.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_joystick.m">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_joystick.m">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_monitor.m">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_monitor.m">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_platform.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_platform.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_time.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_time.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/cocoa_window.m">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/cocoa_window.m">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/context.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/context.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/egl_context.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/egl_context.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/egl_context.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/egl_context.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/init.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/init.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/input.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/input.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/internal.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/internal.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/mappings.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/mappings.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/monitor.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/monitor.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/nsgl_context.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/nsgl_context.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/nsgl_context.m">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/nsgl_context.m">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/osmesa_context.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/osmesa_context.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/osmesa_context.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/osmesa_context.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/posix_thread.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/posix_thread.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/posix_thread.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/posix_thread.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/vulkan.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/vulkan.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/window.c">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/window.c">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/cmake-build-debug/3rd_party/glfw/src/glfw_config.h">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/cmake-build-debug/3rd_party/glfw/src/glfw_config.h">
 			<Option target="glfw"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/main.cpp">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/main.cpp">
 			<Option target="pic2vedio"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/CMakeLists.txt">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMakeLists.txt">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\3rd_party\glfw\"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMake/cmake_uninstall.cmake.in">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/CMake/cmake_uninstall.cmake.in">
 			<Option virtualFolder="CMake Files\3rd_party\glfw\CMake\"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMake/glfw3.pc.in">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/CMake/glfw3.pc.in">
 			<Option virtualFolder="CMake Files\3rd_party\glfw\CMake\"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/CMake/glfw3Config.cmake.in">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/CMake/glfw3Config.cmake.in">
 			<Option virtualFolder="CMake Files\3rd_party\glfw\CMake\"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/CMakeLists.txt">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\3rd_party\glfw\src\"/>
 		</Unit>
-		<Unit filename="/Users/songtingyu/Desktop/Graphics/shader-practice/pic2video/3rd_party/glfw/src/glfw_config.h.in">
+		<Unit filename="/Users/songtingyu/Desktop/Vedio/PixelStream/3rd_party/glfw/src/glfw_config.h.in">
 			<Option virtualFolder="CMake Files\3rd_party\glfw\src\"/>
 		</Unit>
 	</Project>
