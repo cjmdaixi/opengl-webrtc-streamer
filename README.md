@@ -1,3 +1,13 @@
+Pixel Streaming
+
+This is a handmade proj following the rules of UE4's pixel-streaming.
+
+### 1 Set Up 
+Please make sure ffmpeg is installed first.
+
+### 2 Ref
+http://dranger.com/ffmpeg/
+
 ### Steps
 1. Form H.264 from OpenGL buffer.
 2. Put them on WebRTC
@@ -31,6 +41,5 @@
    | 运动估计 | 得到运动矢量的过程就是运动估计                               |
    | 解码视频 | 根据补偿数据，运动数据和参考图像恢复出当前图像。             |
    | DCT      | 离散余弦变换，                                               |
-   
-   
+
 

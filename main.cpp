@@ -1,15 +1,30 @@
 
+extern "C"{
+    #include <libavutil/frame.h>
+    #include <libavutil/mem.h>
+    #include <libavcodec/avcodec.h>
+    #include <libavutil/opt.h>
+    #include <libavutil/imgutils.h>
+    #include <libswscale/swscale.h>
+};
+
+#include <ctime>
+#include <cstdio>
+#include <thread>
 #include <glm/glm.hpp>
-#include<cstdio>
 #include "Camera.h"
 #include "Shader.h"
 #include <GLFW/glfw3.h>
-#include <ctime>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
+
+// mempool
+std::vector<AVFrame> framePool;
+
+
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -32,8 +47,37 @@ const char* cmd = "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s 800x600 -i - "
                   "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
 
 const char* ts = "ls *";
+
+void Init(AVCodecContext* env_ctx)
+{
+
+
+}
+void Encode(AVCodecContext* codec,AVFrame *frame,AVPacket* pkt,int framesToWrite)
+{
+
+}
+
 int main()
 {
+    int ret;
+    AVCodec* codec;
+    AVCodecContext* c;
+    AVFrame *frame; // vedio frame YUV frame
+    AVFrame *frameRGB; // RGB frame
+    AVPacket *pkt;
+
+    codec = avcodec_find_encoder_by_name("libx264rgb");
+    if(!codec){
+        printf("Codec not found");
+    }
+    c = avcodec_alloc_context3(codec);
+    pkt = av_packet_alloc();
+
+    FILE* testFile = fopen("test.txt","wb+");
+
+
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -188,8 +232,12 @@ int main()
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         GLfloat * buffer = new GLfloat[SCR_HEIGHT*SCR_HEIGHT*4];
+        uint8_t * out_buffer = new uint8_t[SCR_HEIGHT*SCR_HEIGHT*3];
         glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
+        glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGB,GL_UNSIGNED_BYTE,out_buffer);
+        fwrite(out_buffer,SCR_WIDTH*SCR_HEIGHT*3,1,testFile);
         fwrite(buffer,sizeof(int)*SCR_WIDTH*SCR_HEIGHT,1,ffmpeg);
+
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

@@ -3,3 +3,5 @@ cmake-build-debug
 .vscode
 .DS_Store
 .idea
+
+.mp4

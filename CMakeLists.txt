@@ -1,8 +1,19 @@
-cmake_minimum_required(VERSION 3.1)
-project(pic2vedio)
+cmake_minimum_required(VERSION 3.17)
+project(pic2video)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_CXX_FLAGS "-D__STDC_CONSTANT_MACROS")
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
+    libavdevice
+    libavfilter
+    libavformat
+    libavcodec
+    libswresample
+    libswscale
+    libavutil
+)
 
 if(CMAKE_HOST_APPLE)
     add_compile_options(-Wno-deprecated-declarations)
@@ -24,8 +35,6 @@ endif()
 include_directories(3rd_party/glm)
 
 add_executable(
-        pic2vedio
-        main.cpp
-        ${GLAD_SRC}
+        pic2video main.cpp ${GLAD_SRC}
 )
-target_link_libraries(pic2vedio ${LIBS})
+target_link_libraries(pic2video  ${LIBS} PkgConfig::LIBAV )
