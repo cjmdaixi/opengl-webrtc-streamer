@@ -3,6 +3,7 @@ extern "C"{
     #include <libavutil/frame.h>
     #include <libavutil/mem.h>
     #include <libavcodec/avcodec.h>
+    #include <libavformat/avformat.h>
     #include <libavutil/opt.h>
     #include <libavutil/imgutils.h>
     #include <libswscale/swscale.h>
@@ -21,15 +22,11 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
-// mempool
-std::vector<AVFrame> framePool;
-
-
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
+const char* outfile = "output.mp4";
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
@@ -43,41 +40,113 @@ float lastFrame = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-const char* cmd = "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s 800x600 -i - "
-                  "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
-
-const char* ts = "ls *";
-
-void Init(AVCodecContext* env_ctx)
+AVFrame* pframeYUV;
+AVCodec* codec;
+int inlinesize[2] = {SCR_WIDTH*3,0};
+uint8_t* inbuf[2],*outbuf;
+AVCodecContext * codecCtx;
+SwsContext* swsContext;
+AVPacket* pkt;
+int count = 0;
+FILE* fout = nullptr;
+void InitEnv()
 {
+    // malloc inbuf size
+    inbuf[0] = (uint8_t*)malloc(sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
+    inbuf[1] = nullptr;
+    // Set YUV Frame and out buf
+    av_register_all();
 
+    // Set H264 encoder
+    codec = avcodec_find_encoder(AV_CODEC_ID_H264);
+    codecCtx = avcodec_alloc_context3(codec);
+    if(!codecCtx){
+        std::cout<<"avcodec_alloc_context3 failed"<<std::endl;
+    }
+    pkt = av_packet_alloc();
+    if(!pkt)
+        exit(1);
+
+    codecCtx->bit_rate = 400000;
+    codecCtx->width = SCR_WIDTH;
+    codecCtx->height = SCR_HEIGHT;
+    codecCtx->time_base = (AVRational){1,25};
+    codecCtx->framerate = (AVRational){25,1};
+    codecCtx->gop_size = 10;
+    codecCtx->max_b_frames = 1;
+    codecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
+    if(codec->id == AV_CODEC_ID_H264){
+        av_opt_set(codecCtx->priv_data,"preset","slow",0);
+    }
+    int ret = avcodec_open2(codecCtx,codec,NULL);
+    if(ret < 0){
+        std::cout<<"avcodec_open2 failed"<<std::endl;
+    }
+     fout = fopen(outfile,"wb");
+    if(!fout){
+        std::cerr<<"Could not open file"<<outfile<<std::endl;
+        exit(1);
+    }
+    pframeYUV = av_frame_alloc();
+    if(!pframeYUV){
+        std::cerr<<"Could not allocate video frame\n";
+        exit(1);
+    }
+    pframeYUV->format = AV_PIX_FMT_YUV420P;
+    pframeYUV->width = SCR_WIDTH;
+    pframeYUV->height = SCR_HEIGHT;
+    ret = av_frame_get_buffer(pframeYUV,0);
+    if (ret < 0) {
+        fprintf(stderr, "Could not allocate the video frame data\n");
+        exit(1);
+    }
+
+    swsContext = sws_getContext(SCR_WIDTH,SCR_HEIGHT,AV_PIX_FMT_RGB24,
+                                SCR_WIDTH,SCR_HEIGHT,AV_PIX_FMT_YUV420P,
+                                SWS_BICUBIC,NULL,NULL,NULL);
 
 }
-void Encode(AVCodecContext* codec,AVFrame *frame,AVPacket* pkt,int framesToWrite)
-{
 
+void Encode(uint8_t* buffer)
+{
+    int x,y;
+    memcpy(inbuf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
+    inbuf[1] = nullptr;
+    int height = sws_scale(swsContext,(const uint8_t* const*)inbuf,inlinesize,0,SCR_HEIGHT,
+                           pframeYUV->data,pframeYUV->linesize);
+    if(height<=0) exit(1);
+
+    pframeYUV->pts = count++ * (codecCtx->time_base.num * 1000 / codecCtx->time_base.den);
+    int ret = avcodec_send_frame(codecCtx,pframeYUV);
+    if(ret < 0){
+        fprintf(stderr,"Error sending a frame for encoding\n");
+        exit(1);
+    }
+    while(ret >= 0){
+        ret = avcodec_receive_packet(codecCtx,pkt);
+        if(ret == AVERROR(EAGAIN) || ret == AVERROR_EOF){
+            return;
+        }
+        else if(ret < 0){
+            std::cerr<<"error during encoding"<<std::endl;
+            exit(1);
+        }
+        fwrite(pkt->data,1,pkt->size,fout);
+        av_packet_unref(pkt);
+    }
+}
+
+void End(){
+    avcodec_free_context(&codecCtx);
+    av_frame_free(&pframeYUV);
+    av_packet_free(&pkt);
+    sws_freeContext(swsContext);
+    fclose(fout);
 }
 
 int main()
 {
-    int ret;
-    AVCodec* codec;
-    AVCodecContext* c;
-    AVFrame *frame; // vedio frame YUV frame
-    AVFrame *frameRGB; // RGB frame
-    AVPacket *pkt;
-
-    codec = avcodec_find_encoder_by_name("libx264rgb");
-    if(!codec){
-        printf("Codec not found");
-    }
-    c = avcodec_alloc_context3(codec);
-    pkt = av_packet_alloc();
-
-    FILE* testFile = fopen("test.txt","wb+");
-
-
-
+    InitEnv();
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -186,15 +255,12 @@ int main()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    FILE* ffmpeg = popen(cmd, "w");
-    if(ffmpeg == NULL){
-        std::cerr<<"popen fails."<<std::endl;
-        return 0;
-    }
     time_t now = time(NULL);
     time_t time_limit = now+10;
     // render loop
     // -----------
+    uint8_t * buffer = new uint8_t[SCR_WIDTH*SCR_HEIGHT*3];
+    int flag = 1;
     while (!glfwWindowShouldClose(window) && now < time_limit)
     {
         now = time(NULL);
@@ -211,7 +277,9 @@ int main()
         // render
         // ------
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
         // be sure to activate shader when setting uniforms/drawing objects
         CubeShader->use();
@@ -230,18 +298,13 @@ int main()
         // render the cube
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-
-        GLfloat * buffer = new GLfloat[SCR_HEIGHT*SCR_HEIGHT*4];
-        uint8_t * out_buffer = new uint8_t[SCR_HEIGHT*SCR_HEIGHT*3];
-        glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
-        glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGB,GL_UNSIGNED_BYTE,out_buffer);
-        fwrite(out_buffer,SCR_WIDTH*SCR_HEIGHT*3,1,testFile);
-        fwrite(buffer,sizeof(int)*SCR_WIDTH*SCR_HEIGHT,1,ffmpeg);
-
+        glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGB,GL_UNSIGNED_BYTE,buffer);
+        Encode(buffer);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
+
         glfwPollEvents();
     }
 
@@ -249,14 +312,12 @@ int main()
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &cubeVAO);
     glDeleteBuffers(1, &VBO);
-
+    //Encode(nullptr);
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
-    int status = fclose(ffmpeg);
-    if(status == -1){
-        std::cerr<<"close failed."<<std::endl;
-    }
+    printf("FrameCount:%d\n",count);
+    End();
     return 0;
 }
 
