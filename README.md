@@ -3,7 +3,8 @@ Pixel Streaming
 This is a handmade proj following the rules of UE4's pixel-streaming.
 
 ### 1 Set Up 
-Please make sure ffmpeg is installed first.
+Please make sure ffmpeg is installed first. 
+CentOS and macos is recommended.
 
 ### 2 Ref
 http://dranger.com/ffmpeg/
