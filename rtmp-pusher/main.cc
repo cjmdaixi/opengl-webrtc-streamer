@@ -73,7 +73,8 @@ int main()
             exit_av(ifmt_ctx,ofmt_ctx);
         }
         //Copy the settings of AVCodecContext
-        ret = avcodec_copy_context(out_stream->codec, in_stream->codec);
+
+        ret = avcodec_parameters_copy(out_stream->codecpar,ifmt_ctx->streams[i]->codecpar);
         if (ret < 0) {
             printf( "Failed to copy context from input to output stream codec context\n");
             exit_av(ifmt_ctx,ofmt_ctx);
@@ -150,8 +151,7 @@ int main()
             break;
         }
 
-        av_free_packet(&pkt);
-
+        av_packet_unref(&pkt);
     }
     //Write file trailer
     av_write_trailer(ofmt_ctx);
