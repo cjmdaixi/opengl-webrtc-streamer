@@ -1,10 +1,8 @@
 #include <ctime>
 #include <cstdio>
-#include <thread>
 
-#include "streamer.h"
 #include "scene.h"
-
+#include "streamer.h"
 void SetScene(Scene* scene){
     scene->SetUpEnv();
     scene->SetObjs();
@@ -13,14 +11,15 @@ void SetScene(Scene* scene){
 
 void do_main(int argc,char* argv[])
 {
-    uint8_t buffer[SCR_WIDTH*SCR_HEIGHT*3];
     Scene* scene = new Scene();
-    Streamer* streamer = new Streamer();
-    SetScene(scene);
+    Streamer* streamer = new Streamer(*scene);
 
-    // TODO: process input parameters
-    // TODO: multi thread
-    scene->DrawScene(buffer);
+    SetScene(scene);
+    scene->AttachStreamer(streamer);
+    streamer->SetUpEnv();
+
+    scene->DrawScene();
+    return;
 }
 
 int main(int argc,char* argv[])

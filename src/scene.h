@@ -11,18 +11,25 @@
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
 
+#include "streamer.h"
+#include <mutex>
+#include <thread>
+
 class Scene {
 public:
     Scene();
     void SetUpEnv();
     void SetObjs(); // Set objs for drawing
     void SetCallback();
-    void DrawScene(uint8_t * buf);
+    void DrawScene();
     void Terminate();
+    void AttachStreamer(Streamer* streamer);
     Camera* get_camera();
-public:
-    bool buffer_read;
 private:
+    void Notify();
+    Streamer* streamer_; // This can be changed to a list
+private:
+    uint8_t* buf;
     GLFWwindow* window;
     unsigned int VBO;
     unsigned int VAO;

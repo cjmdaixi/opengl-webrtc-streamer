@@ -4,8 +4,24 @@
 
 #include "streamer.h"
 
-Streamer::Streamer()
+Streamer::Streamer(Scene & scene):scene_(scene)
 {
-    encoder = new Encoder(1,"output.mp4");
-    rtmp_publisher = nullptr;
+    encoder = nullptr;
+}
+
+void Streamer::SetUpEnv()
+{
+    av_register_all();
+    encoder = new Encoder(true,"output.mp4");
+    encoder->Init();
+}
+
+void Streamer::Encode(uint8_t *buffer)
+{
+    encoder->GenOnePkt(buffer);
+}
+
+void Streamer::EndStream()
+{
+    encoder->EndEncode();
 }

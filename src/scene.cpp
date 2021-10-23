@@ -27,6 +27,11 @@ Scene::Scene()
     lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 }
 
+void Scene::AttachStreamer(Streamer *streamer)
+{
+    streamer_ =  streamer;
+}
+
 void Scene::SetUpEnv()
 {
     // glfw: initialize and configure
@@ -104,8 +109,9 @@ Camera* Scene::get_camera() {
     return camera;
 }
 
-void Scene::DrawScene(uint8_t * buf)
+void Scene::DrawScene()
 {
+    buf = new uint8_t[SCR_HEIGHT*SCR_WIDTH*3];
     time_t now = time(NULL);
     while (!glfwWindowShouldClose(window))
     {
@@ -145,13 +151,17 @@ void Scene::DrawScene(uint8_t * buf)
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGB,GL_UNSIGNED_BYTE,buf);
-        buffer_read = true;
+        Notify();
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
 
         glfwPollEvents();
     }
+}
+
+void Scene::Notify() {
+    streamer_->Encode(buf);
 }
 
 void Scene::Terminate()

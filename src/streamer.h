@@ -8,14 +8,18 @@
 #include "encoder.h"
 #include "rtmp_publisher.h"
 
+class Scene;
+
 class Streamer {
 public:
-    Streamer();
+    Streamer(Scene & scene);
     void SetUpEnv();
     void Encode(uint8_t* buffer);
-    void OnPublish();
-    void DoPublish();
+//    void OnPublish();
+//    void DoPublish();
+    void EndStream();
 private:
+    Scene & scene_;
     Encoder* encoder;
     RtmpPublisher* rtmp_publisher;
 };

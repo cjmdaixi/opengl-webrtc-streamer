@@ -14,6 +14,7 @@ Encoder::Encoder(){
     swsContext = nullptr;
     write_to_file_flag = false;
     out_filename = nullptr;
+    frame_count = 0;
 }
 
 Encoder::Encoder(bool write_flag,char* filename){
@@ -25,10 +26,14 @@ Encoder::Encoder(bool write_flag,char* filename){
     write_to_file_flag = write_flag;
     out_filename = filename;
     fout = fopen(out_filename,"wb");
+    Init();
+    frame_count = 0;
 }
 
 void Encoder::Init()
 {
+    in_buf[0] = (uint8_t*)malloc(sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
+    in_buf[1] = nullptr;
     // AV_CODEC_ID is declared in common.h
     codec = avcodec_find_encoder((AVCodecID) AV_CODEC_ID);
     codecCtx = avcodec_alloc_context3(codec);
@@ -80,18 +85,19 @@ void Encoder::EndEncode()
     av_frame_free(&frameYUV);
     av_packet_free(&pkt);
     sws_freeContext(swsContext);
+    fclose(fout);
 }
 
 void Encoder::GenOnePkt(uint8_t* buffer)
 {
     // TODO: memory leak may happen here
-    memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH);
+    memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
     in_buf[1] = nullptr;
     int height = sws_scale(swsContext,(const uint8_t* const*)in_buf,inlinesize,0,SCR_HEIGHT,
                            frameYUV->data,frameYUV->linesize);
     if(height <= 0) exit(1);
     // TODO: whether pts info needed should be further discuss
-    // pframeYUV->pts = count++ * (codecCtx->time_base.num * 1000 / codecCtx->time_base.den);
+    frameYUV->pts = frame_count++ * (codecCtx->time_base.num * 1000 / codecCtx->time_base.den);
     int ret = avcodec_send_frame(codecCtx,frameYUV);
     if(ret < 0){
         printf("Error sending a frame for encoding");

@@ -15,6 +15,9 @@ extern "C"{
 #include <libswscale/swscale.h>
 };
 
+#include <mutex>
+#include <thread>
+
 const int AV_CODEC_ID = AV_CODEC_ID_H264;
 
 #include<iostream>
@@ -28,6 +31,7 @@ public:
     void PktToX264();
     void EndEncode();
 private:
+    int frame_count;
     uint8_t * in_buf[2];
     bool write_to_file_flag;
     char* out_filename;

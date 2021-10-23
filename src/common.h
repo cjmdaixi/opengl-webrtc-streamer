@@ -4,10 +4,15 @@
 
 #ifndef COMMON_H
 #define COMMON_H
-
+#include <thread>
+#include <mutex>
 // global
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+
+// Multi-thread
+static bool thread_semaphore = false;
+static std::condition_variable cv;
 
 // FFMPEG parameters
 const int inlinesize[2] = {SCR_WIDTH*3,0}; // For sws_scale convert function
