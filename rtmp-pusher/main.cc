@@ -4,7 +4,6 @@
  * to server to display.
  */
 
-
 #include <cstdio>
 
 extern "C"
@@ -74,7 +73,8 @@ int main()
         }
         //Copy the settings of AVCodecContext
 
-        ret = avcodec_parameters_copy(out_stream->codecpar,ifmt_ctx->streams[i]->codecpar);
+        //ret = avcodec_parameters_copy(out_stream->codecpar,ifmt_ctx->streams[i]->codecpar);
+        ret = avcodec_copy_context(out_stream->codec,in_stream->codec);
         if (ret < 0) {
             printf( "Failed to copy context from input to output stream codec context\n");
             exit_av(ifmt_ctx,ofmt_ctx);

@@ -3,3 +3,9 @@
 //
 
 #include "streamer.h"
+
+Streamer::Streamer()
+{
+    encoder = new Encoder(1,"output.mp4");
+    rtmp_publisher = nullptr;
+}

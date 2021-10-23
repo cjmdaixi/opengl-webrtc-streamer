@@ -40,6 +40,7 @@ add_executable(
         encoder.cpp
         rtmp_publisher.cpp
         streamer.cpp
+        scene.cpp
         ${GLAD_SRC}
 )
 

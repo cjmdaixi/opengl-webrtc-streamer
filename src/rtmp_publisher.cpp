@@ -20,6 +20,8 @@ void RtmpPublisher::Publish(AVPacket* pkt)
 {
     // Copy codecpar, the context.
 
+    // Copy packet
+
 }
 
 void RtmpPublisher::EndPublish()

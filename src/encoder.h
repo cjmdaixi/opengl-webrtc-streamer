@@ -15,6 +15,8 @@ extern "C"{
 #include <libswscale/swscale.h>
 };
 
+const int AV_CODEC_ID = AV_CODEC_ID_H264;
+
 #include<iostream>
 #include<cstdio>
 class Encoder {
