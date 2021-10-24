@@ -6,6 +6,7 @@
 #define ENCODER_H
 
 extern "C"{
+#include<libavdevice/avdevice.h>
 #include <libavutil/frame.h>
 #include <libavutil/mem.h>
 #include <libavcodec/avcodec.h>
@@ -29,6 +30,7 @@ public:
     void Init();
     void GenOnePkt(uint8_t* buffer);
     void PktToX264();
+    void FlushEncoder(int streamIndex);
     void EndEncode();
 private:
     int frame_count;
@@ -39,6 +41,9 @@ private:
 private:
     AVCodec* codec;
     AVCodecContext* codecCtx;
+    AVFormatContext* ofctx;
+    AVStream* stream;
+    AVOutputFormat* outputFormat;
     AVPacket* pkt;
     AVFrame* frameYUV;
     SwsContext* swsContext;

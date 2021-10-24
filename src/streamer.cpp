@@ -12,6 +12,7 @@ Streamer::Streamer(Scene & scene):scene_(scene)
 void Streamer::SetUpEnv()
 {
     av_register_all();
+    avcodec_register_all();
     encoder = new Encoder(true,"output.mp4");
     encoder->Init();
 }
