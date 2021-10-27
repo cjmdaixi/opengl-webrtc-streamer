@@ -19,7 +19,6 @@ void RtmpPublisher::Init()
 void RtmpPublisher::Publish(AVPacket* pkt)
 {
 
-
 }
 
 void RtmpPublisher::EndPublish()

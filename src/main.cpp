@@ -19,6 +19,7 @@ void do_main(int argc,char* argv[])
     streamer->SetUpEnv();
 
     scene->DrawScene();
+    streamer->EndStream();
     return;
 }
 

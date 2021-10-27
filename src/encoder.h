@@ -23,6 +23,38 @@ const int AV_CODEC_ID = AV_CODEC_ID_H264;
 
 #include<iostream>
 #include<cstdio>
+
+#define BITS_PER_PIXCEL 24
+#define FORMAT_RGB 3
+
+typedef unsigned char  	BYTE;
+typedef unsigned short  WORD;
+typedef unsigned int  	DWORD;
+typedef int  		LONG;
+
+typedef struct
+{
+    WORD    bfType;
+    DWORD   bfSize;
+    WORD    bfReserved1;
+    WORD    bfReserved2;
+    DWORD   bfOffBits;
+} BMP_FILE_HEADER;
+
+typedef struct {
+    DWORD biSize;
+    LONG biWidth;
+    LONG biHeight;
+    WORD biPlanes;
+    WORD biBitCount;
+    DWORD biCompression;
+    DWORD biSizeImage;
+    LONG biXPelsPerMeter;
+    LONG biYPelsPerMeter;
+    DWORD biClrUsed;
+    DWORD biClrImportant;
+} BMP_INFO_HEADER;
+
 class Encoder {
 public:
     Encoder();
@@ -32,6 +64,10 @@ public:
     void PktToX264();
     void FlushEncoder(int streamIndex);
     void EndEncode();
+private:
+    void rgb24toppm(uint8_t* buf,int width,int height);
+    void yuv420toppm(AVFrame* frame);
+    void write_ppm_header(FILE* fp);
 private:
     int frame_count;
     uint8_t * in_buf[2];

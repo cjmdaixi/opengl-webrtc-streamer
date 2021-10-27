@@ -110,6 +110,51 @@ void Encoder::Init()
                                 SWS_BICUBIC,NULL,NULL,NULL);
 }
 
+
+void Encoder::GenOnePkt(uint8_t* buffer)
+{
+    // TODO: please reverse the picture upside down
+    memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
+    in_buf[1] = nullptr;
+    // Dump
+     rgb24toppm(in_buf[0],SCR_WIDTH,SCR_HEIGHT);
+    int height = sws_scale(swsContext,(const uint8_t* const*)in_buf,inlinesize,0,SCR_HEIGHT,
+                           frameYUV->data,frameYUV->linesize);
+    if(height <= 0) exit(1);
+    // TODO: whether pts info needed should be further discuss
+    frameYUV->pts = frame_count++ * (stream->time_base.den / codecCtx->time_base.num * 25);
+    int ret = avcodec_send_frame(codecCtx,frameYUV);
+    if(ret < 0){
+        printf("Error sending a frame for encoding");
+        exit(1);
+    }
+    while(ret >= 0){
+        ret = avcodec_receive_packet(codecCtx,pkt);
+        if(ret == AVERROR(EAGAIN) || ret == AVERROR_EOF){
+            return;
+        }
+        else if(ret < 0){
+            std::cerr<<"error during encoding"<<std::endl;
+            exit(1);
+        }
+        if(write_to_file_flag){
+            PktToX264();
+        }
+        // TODO: send this pkt data to rtsp out file.
+        av_packet_unref(pkt);
+    }
+}
+
+void Encoder::PktToX264()
+{
+    pkt->stream_index = stream->index;
+    int er = av_write_frame(ofctx,pkt);
+    if(er < 0){
+        std::cout<<"write frame error"<<std::endl;
+    }
+    fwrite(pkt->data,1,pkt->size,fout);
+}
+
 void Encoder::FlushEncoder(int streamIndex)
 {
     int ret;
@@ -147,51 +192,26 @@ void Encoder::EndEncode()
     avio_close(ofctx->pb);
     av_packet_unref(pkt);
     avformat_free_context(ofctx);
-    avcodec_free_context(&codecCtx);
+    //avcodec_free_context(&codecCtx);
     av_frame_free(&frameYUV);
-    av_packet_free(&pkt);
+    //sav_packet_free(&pkt);
     sws_freeContext(swsContext);
     fclose(fout);
 }
-
-void Encoder::GenOnePkt(uint8_t* buffer)
+// the buf is up-down reversed
+void Encoder::rgb24toppm(uint8_t *buf, int width, int height)
 {
-    // TODO: memory leak may happen here
-    memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
-    in_buf[1] = nullptr;
-    int height = sws_scale(swsContext,(const uint8_t* const*)in_buf,inlinesize,0,SCR_HEIGHT,
-                           frameYUV->data,frameYUV->linesize);
-    if(height <= 0) exit(1);
-    // TODO: whether pts info needed should be further discuss
-    frameYUV->pts = frame_count++ * (stream->time_base.den / codecCtx->time_base.num * 25);
-    int ret = avcodec_send_frame(codecCtx,frameYUV);
-    if(ret < 0){
-        printf("Error sending a frame for encoding");
-        exit(1);
+    FILE* fp = fopen("rgb24to.ppm","wb+");
+    write_ppm_header(fp);
+    for(int j = height -1 ;j >=0 ;j--){
+        fwrite(buf+j*width*3,1,width*3,fp);
     }
-    while(ret >= 0){
-        ret = avcodec_receive_packet(codecCtx,pkt);
-        if(ret == AVERROR(EAGAIN) || ret == AVERROR_EOF){
-            return;
-        }
-        else if(ret < 0){
-            std::cerr<<"error during encoding"<<std::endl;
-            exit(1);
-        }
-        if(write_to_file_flag){
-            PktToX264();
-        }
-        // TODO: send this pkt data to rtsp out file.
-        av_packet_unref(pkt);
-    }
+    fclose(fp);
+    return;
 }
-
-void Encoder::PktToX264()
+void Encoder::write_ppm_header(FILE *fp)
 {
-    pkt->stream_index = stream->index;
-    int er = av_write_frame(ofctx,pkt);
-    if(er < 0){
-        std::cout<<"write frame error"<<std::endl;
-    }
-    fwrite(pkt->data,1,pkt->size,fout);
+    fprintf(fp,"P6\n");
+    fprintf(fp,"%d %d\n",SCR_WIDTH,SCR_HEIGHT);
+    fprintf(fp,"%d\n",255);
 }

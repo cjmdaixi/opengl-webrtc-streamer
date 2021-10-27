@@ -23,7 +23,7 @@ Scene::Scene()
     VAO = 0;
     VBO = 0;
     shader = nullptr;
-    camera = new Camera(glm::vec3(0.0f,0.0f,3.0f));
+    camera = new Camera(glm::vec3(0.0f,0.0f,30.0f));
     lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 }
 
@@ -128,7 +128,7 @@ void Scene::DrawScene()
 
         // render
         // ------
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
