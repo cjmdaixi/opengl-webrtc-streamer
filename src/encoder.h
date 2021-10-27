@@ -24,37 +24,6 @@ const int AV_CODEC_ID = AV_CODEC_ID_H264;
 #include<iostream>
 #include<cstdio>
 
-#define BITS_PER_PIXCEL 24
-#define FORMAT_RGB 3
-
-typedef unsigned char  	BYTE;
-typedef unsigned short  WORD;
-typedef unsigned int  	DWORD;
-typedef int  		LONG;
-
-typedef struct
-{
-    WORD    bfType;
-    DWORD   bfSize;
-    WORD    bfReserved1;
-    WORD    bfReserved2;
-    DWORD   bfOffBits;
-} BMP_FILE_HEADER;
-
-typedef struct {
-    DWORD biSize;
-    LONG biWidth;
-    LONG biHeight;
-    WORD biPlanes;
-    WORD biBitCount;
-    DWORD biCompression;
-    DWORD biSizeImage;
-    LONG biXPelsPerMeter;
-    LONG biYPelsPerMeter;
-    DWORD biClrUsed;
-    DWORD biClrImportant;
-} BMP_INFO_HEADER;
-
 class Encoder {
 public:
     Encoder();

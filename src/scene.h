@@ -26,10 +26,9 @@ public:
     void AttachStreamer(Streamer* streamer);
     Camera* get_camera();
 private:
-    void Notify();
+    void Notify(uint8_t* buf);
     Streamer* streamer_; // This can be changed to a list
 private:
-    uint8_t* buf;
     GLFWwindow* window;
     unsigned int VBO;
     unsigned int VAO;

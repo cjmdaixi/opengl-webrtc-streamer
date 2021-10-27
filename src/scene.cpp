@@ -47,7 +47,7 @@ void Scene::SetUpEnv()
 
     // glfw window creation
     // --------------------
-    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    window = glfwCreateWindow(screen_width, screen_height, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -111,10 +111,13 @@ Camera* Scene::get_camera() {
 
 void Scene::DrawScene()
 {
-    buf = new uint8_t[SCR_HEIGHT*SCR_WIDTH*3];
+
+    int width = 0,height = 0;
+    glfwGetWindowSize(window,&width,&height);
     time_t now = time(NULL);
     while (!glfwWindowShouldClose(window))
     {
+
         now = time(NULL);
         // per-frame time logic
         // --------------------
@@ -150,17 +153,19 @@ void Scene::DrawScene()
         // render the cube
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
+        GLubyte buf[SCR_WIDTH*SCR_HEIGHT*3] = {0};
         glReadPixels(0,0,SCR_WIDTH,SCR_HEIGHT,GL_RGB,GL_UNSIGNED_BYTE,buf);
-        Notify();
+        Notify(buf);
+        memset(buf,0,SCR_WIDTH*SCR_HEIGHT*3);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
-
         glfwPollEvents();
     }
+    //free(buf);
 }
 
-void Scene::Notify() {
+void Scene::Notify(uint8_t* buf) {
     streamer_->Encode(buf);
 }
 

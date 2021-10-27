@@ -6,9 +6,19 @@
 #define COMMON_H
 #include <thread>
 #include <mutex>
+
+// This is for screen saving
+#ifdef __APPLE__
+const int scale = 2;
+#else
+const int scale = 1;
+#endif
 // global
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int screen_width = 800;
+const unsigned int screen_height = 600;
+
+const unsigned int SCR_WIDTH = screen_width * scale;
+const unsigned int SCR_HEIGHT = screen_height * scale;
 
 // Multi-thread
 static bool thread_semaphore = false;
@@ -66,5 +76,6 @@ const float vertices[] = {
         -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
+
 
 #endif

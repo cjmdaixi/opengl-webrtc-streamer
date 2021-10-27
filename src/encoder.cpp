@@ -117,7 +117,8 @@ void Encoder::GenOnePkt(uint8_t* buffer)
     memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
     in_buf[1] = nullptr;
     // Dump
-     rgb24toppm(in_buf[0],SCR_WIDTH,SCR_HEIGHT);
+    rgb24toppm(buffer,SCR_WIDTH,SCR_HEIGHT);
+    //rgb24toppm(in_buf[0],SCR_WIDTH,SCR_HEIGHT);
     int height = sws_scale(swsContext,(const uint8_t* const*)in_buf,inlinesize,0,SCR_HEIGHT,
                            frameYUV->data,frameYUV->linesize);
     if(height <= 0) exit(1);

@@ -20,6 +20,7 @@ void do_main(int argc,char* argv[])
 
     scene->DrawScene();
     streamer->EndStream();
+    scene->Terminate();
     return;
 }
 
