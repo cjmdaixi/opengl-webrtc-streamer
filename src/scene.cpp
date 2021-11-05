@@ -25,6 +25,9 @@ Scene::Scene()
     shader = nullptr;
     camera = new Camera(glm::vec3(0.0f,0.0f,30.0f));
     lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
+    prev_time = 0.0;
+    frame_count = 0;
+    delta_t = 0.0;
 }
 
 void Scene::AttachStreamer(Streamer *streamer)
@@ -40,6 +43,7 @@ void Scene::SetUpEnv()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_REFRESH_RATE,30);
 
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -111,20 +115,25 @@ Camera* Scene::get_camera() {
 
 void Scene::DrawScene()
 {
-
+    int fps;
     int width = 0,height = 0;
     glfwGetWindowSize(window,&width,&height);
     time_t now = time(NULL);
     while (!glfwWindowShouldClose(window))
     {
-
-        now = time(NULL);
         // per-frame time logic
         // --------------------
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-
+        frame_count++;
+        delta_t = currentFrame -prev_time;
+        if(delta_t >= 1.0){
+            std::string title = std::to_string((double)frame_count/delta_t) + " fps";
+            glfwSetWindowTitle(window,title.c_str());
+            frame_count = 0;
+            prev_time = currentFrame;
+        }
         // input
         // -----
         processInput(window);
@@ -134,7 +143,6 @@ void Scene::DrawScene()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
         // be sure to activate shader when setting uniforms/drawing objects
         shader->use();

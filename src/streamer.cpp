@@ -11,10 +11,17 @@ Streamer::Streamer(Scene & scene):scene_(scene)
 
 void Streamer::SetUpEnv()
 {
+    SetFFmpeg();
+    encoder = new Encoder();
+    encoder->Init();
+    encoder->InitRtmpPublisher();
+}
+
+void Streamer::SetFFmpeg()
+{
     av_register_all();
     avcodec_register_all();
-    encoder = new Encoder(true,"output.mp4");
-    encoder->Init();
+    avformat_network_init();
 }
 
 void Streamer::Encode(uint8_t *buffer)

@@ -15,6 +15,8 @@ public:
     Streamer(Scene & scene);
     void SetUpEnv();
     void Encode(uint8_t* buffer);
+    void SetFFmpeg();
+    void SetRtc();
 //    void OnPublish();
 //    void DoPublish();
     void EndStream();

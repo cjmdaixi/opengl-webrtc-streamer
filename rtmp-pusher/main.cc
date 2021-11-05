@@ -22,6 +22,56 @@ void exit_av(AVFormatContext * ifmt_ctx,AVFormatContext * ofmt_ctx){
     return;
 }
 
+bool is_idr_frame(uint8_t* buf,int size){
+    int last = 0;
+    for (int i = 2; i <= size; ++i) {
+        if (i == size) {
+            if (last) {
+                int ret = buf[last]&0x1f;
+                if (ret == 7 || ret == 5 || ret == 8) {
+                    return true;
+                }
+            }
+        }
+        else if (buf[i - 2] == 0x00 && buf[i - 1] == 0x00 && buf[i] == 0x01) {
+            if (last) {
+                int size = i - last - 3;
+                if (buf[i - 3]) ++size;
+                int ret = buf[last]&0x1f;
+                if (ret == 7 || ret == 5 || ret == 8) {
+                    return true;
+                }
+            }
+            last = i + 1;
+        }
+    }
+    return false;
+}
+
+int get_sps_pps_data_len(uint8_t* buf,int len)
+{
+    int i = 0;
+    for (i = 0; i < len; i++) {
+        if (buf[i+0] == 0x00
+            && buf[i + 1] == 0x00
+            && buf[i + 2] == 0x00
+            && buf[i + 3] == 0x01
+            && buf[i + 4] == 0x06) {
+            break;
+        }
+    }
+    if (i == len) {
+        printf("GetSpsPpsFromH264 error...");
+        return 0;
+    }
+
+    printf("h264(i=%d):", i);
+    for (int j = 0; j < i; j++) {
+        printf("%x ", buf[j]);
+    }
+    return i;
+}
+
 int main()
 {
     AVOutputFormat *ofmt = nullptr;
@@ -129,7 +179,6 @@ int main()
                 av_usleep(pts_time - now_time);
 
         }
-
         in_stream  = ifmt_ctx->streams[pkt.stream_index];
         out_stream = ofmt_ctx->streams[pkt.stream_index];
         /* copy packet */

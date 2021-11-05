@@ -12,21 +12,24 @@ extern "C"{
 };
 
 #include "common.h"
-
+#include <iostream>
 #define AV_CODEC_FLAG_GLOBAL_HEADER (1 << 22)
 #define CODEC_FLAG_GLOBAL_HEADER AV_CODEC_FLAG_GLOBAL_HEADER
 
 class RtmpPublisher {
 public:
     RtmpPublisher();
-    void Init();
+    void SetUp();
     void Publish(AVPacket* pkt);
     void EndPublish();
 private:
-
+    int pts_cnt;
     AVOutputFormat *ofmt;
-    AVFormatContext *ifmt_ctx;
     AVFormatContext *ofmt_ctx;
+    AVStream* out_stream;
+    AVCodecParameters  * out_codecpar;
+    AVCodec *out_codec ;
+    AVCodecContext *out_codec_ctx;
     //AVPacket* pkt;
 };
 

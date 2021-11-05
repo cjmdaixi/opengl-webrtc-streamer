@@ -7,17 +7,7 @@
 #include "common.h"
 
 Encoder::Encoder(){
-    codec = nullptr;
-    codecCtx = nullptr;
-    pkt = nullptr;
-    frameYUV = nullptr;
-    swsContext = nullptr;
-    write_to_file_flag = false;
-    out_filename = nullptr;
-    frame_count = 0;
-}
-
-Encoder::Encoder(bool write_flag,char* filename){
+    rtmpPublisher = nullptr;
     ofctx = nullptr;
     stream = nullptr;
     outputFormat = nullptr;
@@ -26,8 +16,7 @@ Encoder::Encoder(bool write_flag,char* filename){
     pkt = nullptr;
     frameYUV = nullptr;
     swsContext = nullptr;
-    write_to_file_flag = write_flag;
-    out_filename = filename;
+    out_filename = "out.h264";
     frame_count = 0;
 }
 
@@ -50,7 +39,8 @@ void Encoder::Init()
         std::cout<<"Create new stream fails"<<std::endl;
         return;
     }
-
+    stream->r_frame_rate.den = 1;
+    stream->r_frame_rate.num = 25;
     // AV_CODEC_ID is declared in common.h
     //codec = avcodec_find_encoder((AVCodecID) AV_CODEC_ID);
     codecCtx = stream->codec;
@@ -62,12 +52,12 @@ void Encoder::Init()
     codecCtx->height = SCR_HEIGHT;
     codecCtx->time_base.num = 1;
     codecCtx->time_base.den = 25;
-    codecCtx->gop_size = 250;
+    codecCtx->gop_size = 25;
     //codecCtx->framerate = (AVRational){25,1};
     //codecCtx->bit_rate = SCR_HEIGHT * SCR_WIDTH * 3;
     codecCtx->qmin = 10;
     codecCtx->qmax = 51;
-    codecCtx->max_b_frames = 1;
+    codecCtx->max_b_frames = 0;
     AVDictionary* para = nullptr;
     if(codecCtx->codec_id == AV_CODEC_ID_H264){
         av_dict_set(&para,"preset","slow",0);
@@ -110,6 +100,11 @@ void Encoder::Init()
                                 SWS_BICUBIC,NULL,NULL,NULL);
 }
 
+void Encoder::InitRtmpPublisher()
+{
+    rtmpPublisher = new RtmpPublisher();
+    rtmpPublisher->SetUp();
+}
 
 void Encoder::GenOnePkt(uint8_t* buffer)
 {
@@ -117,13 +112,14 @@ void Encoder::GenOnePkt(uint8_t* buffer)
     memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
     in_buf[1] = nullptr;
     // Dump
-    rgb24toppm(buffer,SCR_WIDTH,SCR_HEIGHT);
+    //rgb24toppm(buffer,SCR_WIDTH,SCR_HEIGHT);
     //rgb24toppm(in_buf[0],SCR_WIDTH,SCR_HEIGHT);
     int height = sws_scale(swsContext,(const uint8_t* const*)in_buf,inlinesize,0,SCR_HEIGHT,
                            frameYUV->data,frameYUV->linesize);
     if(height <= 0) exit(1);
     // TODO: whether pts info needed should be further discuss
-    frameYUV->pts = frame_count++ * (stream->time_base.den / codecCtx->time_base.num * 25);
+    //frameYUV->pts = (frame_count++)*(stream->time_base.den)/((stream->time_base.num)*25);
+    frameYUV->pts = AV_NOPTS_VALUE;
     int ret = avcodec_send_frame(codecCtx,frameYUV);
     if(ret < 0){
         printf("Error sending a frame for encoding");
@@ -138,15 +134,18 @@ void Encoder::GenOnePkt(uint8_t* buffer)
             std::cerr<<"error during encoding"<<std::endl;
             exit(1);
         }
-        if(write_to_file_flag){
-            PktToX264();
+        if(dump_video_option){
+            DumpLocalVideo();
+        }
+        if(rtmp_publish_option){
+            rtmpPublisher->Publish(pkt);
         }
         // TODO: send this pkt data to rtsp out file.
         av_packet_unref(pkt);
     }
 }
 
-void Encoder::PktToX264()
+void Encoder::DumpLocalVideo()
 {
     pkt->stream_index = stream->index;
     int er = av_write_frame(ofctx,pkt);
@@ -175,7 +174,7 @@ void Encoder::FlushEncoder(int streamIndex)
             ret = 0;
             break;
         }
-        printf("Flush Encoder: Succeedd to encode 1 frame!\tsize:%5d\n",enc_pkt.size);
+        printf("Flush Encoder: Succeed to encode 1 frame!\tsize:%5d\n",enc_pkt.size);
         ret = av_write_frame(ofctx,&enc_pkt);
         if(ret < 0)
             break;

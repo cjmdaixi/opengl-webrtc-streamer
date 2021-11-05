@@ -26,6 +26,9 @@ public:
     void AttachStreamer(Streamer* streamer);
     Camera* get_camera();
 private:
+    int frame_count;
+    float prev_time;
+    float delta_t;
     void Notify(uint8_t* buf);
     Streamer* streamer_; // This can be changed to a list
 private:

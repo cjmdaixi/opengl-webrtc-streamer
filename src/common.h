@@ -7,12 +7,19 @@
 #include <thread>
 #include <mutex>
 
+// For debug
+static char* out_h264 = "out.h264";
+static char* RTMP_LIVESTEAM = "rtmp://localhost/live/livestream";
+static bool dump_video_option = false;
+static bool rtmp_publish_option = true;
+static bool rtc_publish_option = false;
 // This is for screen saving
 #ifdef __APPLE__
 const int scale = 2;
 #else
 const int scale = 1;
 #endif
+
 // global
 const unsigned int screen_width = 800;
 const unsigned int screen_height = 600;

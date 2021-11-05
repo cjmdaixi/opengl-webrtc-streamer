@@ -43,5 +43,6 @@ add_executable(
         scene.cpp
         ${GLAD_SRC}
 )
-
+#target_include_directories(pic2video PRIVATE ${AVCODEC_INCLUDE_DIR} ${AVFORMAT_INCLUDE_DIR} ${AVUTIL_INCLUDE_DIR} ${AVDEVICE_INCLUDE_DIR})
 target_link_libraries(pic2video  ${LIBS} PkgConfig::LIBAV )
+#target_link_libraries(pic2video PRIVATE ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVUTIL_LIBRARY} ${AVDEVICE_LIBRARY})

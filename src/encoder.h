@@ -24,23 +24,22 @@ const int AV_CODEC_ID = AV_CODEC_ID_H264;
 #include<iostream>
 #include<cstdio>
 
+#include "rtmp_publisher.h"
+
 class Encoder {
 public:
     Encoder();
-    Encoder(bool write_flag,char* filename);
     void Init();
+    void InitRtmpPublisher();
     void GenOnePkt(uint8_t* buffer);
-    void PktToX264();
+    void DumpLocalVideo();
     void FlushEncoder(int streamIndex);
     void EndEncode();
 private:
-    void rgb24toppm(uint8_t* buf,int width,int height);
-    void yuv420toppm(AVFrame* frame);
-    void write_ppm_header(FILE* fp);
+    RtmpPublisher* rtmpPublisher;
 private:
     int frame_count;
     uint8_t * in_buf[2];
-    bool write_to_file_flag;
     char* out_filename;
     FILE* fout;
 private:
@@ -52,6 +51,11 @@ private:
     AVPacket* pkt;
     AVFrame* frameYUV;
     SwsContext* swsContext;
+// For debug
+private:
+    void rgb24toppm(uint8_t* buf,int width,int height);
+    void yuv420toppm(AVFrame* frame);
+    void write_ppm_header(FILE* fp);
 };
 
 
