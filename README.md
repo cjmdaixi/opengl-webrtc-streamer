@@ -1,6 +1,6 @@
 Pixel Streaming
 
-The proj is based on rendering of clouds.(云渲染)
+The proj is based on cloud rendering.(云渲染)
 
 ### 1 Set Up 
 Please make sure ffmpeg is installed first. 
