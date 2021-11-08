@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "streamer.h"
+
 void SetScene(Scene* scene){
     scene->SetUpEnv();
     scene->SetObjs();
@@ -13,11 +14,9 @@ void do_main(int argc,char* argv[])
 {
     Scene* scene = new Scene();
     Streamer* streamer = new Streamer(*scene);
-
     SetScene(scene);
     scene->AttachStreamer(streamer);
-    streamer->SetUpEnv();
-
+    streamer->BeginStream();
     scene->DrawScene();
     streamer->EndStream();
     scene->Terminate();

@@ -22,6 +22,10 @@ Encoder::Encoder(){
 
 void Encoder::Init()
 {
+    av_register_all();
+    avcodec_register_all();
+    avformat_network_init();
+
     in_buf[0] = (uint8_t*)malloc(sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
     in_buf[1] = nullptr;
 

@@ -13,12 +13,10 @@ class Scene;
 class Streamer {
 public:
     Streamer(Scene & scene);
-    void SetUpEnv();
+    void BeginStream();
     void Encode(uint8_t* buffer);
     void SetFFmpeg();
     void SetRtc();
-//    void OnPublish();
-//    void DoPublish();
     void EndStream();
 private:
     Scene & scene_;

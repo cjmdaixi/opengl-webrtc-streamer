@@ -9,24 +9,23 @@ Streamer::Streamer(Scene & scene):scene_(scene)
     encoder = nullptr;
 }
 
-void Streamer::SetUpEnv()
+void Streamer::BeginStream()
 {
-    SetFFmpeg();
-    encoder = new Encoder();
-    encoder->Init();
-    encoder->InitRtmpPublisher();
-}
+    if(rtmp_publish_option){
+        SetFFmpeg();
+        encoder = new Encoder();
+        encoder->Init();
+        encoder->InitRtmpPublisher();
+    }
+    else if(rtc_publish_option){
 
-void Streamer::SetFFmpeg()
-{
-    av_register_all();
-    avcodec_register_all();
-    avformat_network_init();
+    }
 }
 
 void Streamer::Encode(uint8_t *buffer)
 {
-    encoder->GenOnePkt(buffer);
+    if(rtmp_publish_option)
+        encoder->GenOnePkt(buffer);
 }
 
 void Streamer::EndStream()
