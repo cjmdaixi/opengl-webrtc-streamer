@@ -11,10 +11,9 @@ Streamer::Streamer(Scene & scene):scene_(scene)
 
 void Streamer::BeginStream()
 {
+    encoder = new Encoder();
+    encoder->Init();
     if(rtmp_publish_option){
-        SetFFmpeg();
-        encoder = new Encoder();
-        encoder->Init();
         encoder->InitRtmpPublisher();
     }
     else if(rtc_publish_option){

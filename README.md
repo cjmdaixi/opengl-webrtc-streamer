@@ -7,6 +7,7 @@ Please make sure ffmpeg is installed first.
 CentOS and macos is recommended.
 
 ```shell
+git submodule update --init --recursive
 cmake -B cmake-build-debug
 cd cmake-build-debug
 make
@@ -24,5 +25,10 @@ Lots of work still need to be done.
 - [ ] Parallel 
 - [ ] Integrate with Irrlicht Game Engine.
 
+### 3 Next Steps
+2021.11.8
+- [ ] Use librtc(libdatachannel is the origin name) to send memory video.
+- [ ] Implement with HEVC
 
+**Please note: the repo's license is MIT, but the 3rd_party/librtc is GPL.**
 

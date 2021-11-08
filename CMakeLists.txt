@@ -34,6 +34,8 @@ endif()
 
 include_directories(3rd_party/glm)
 
+add_subdirectory(3rd_party/librtc)
+
 add_executable(
         crstreamer
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
@@ -43,6 +45,8 @@ add_executable(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/scene.cpp
         ${GLAD_SRC}
 )
+
+find_package(Threads REQUIRED)
 #target_include_directories(pic2video PRIVATE ${AVCODEC_INCLUDE_DIR} ${AVFORMAT_INCLUDE_DIR} ${AVUTIL_INCLUDE_DIR} ${AVDEVICE_INCLUDE_DIR})
-target_link_libraries(crstreamer  ${LIBS} PkgConfig::LIBAV )
+target_link_libraries(crstreamer  ${LIBS} PkgConfig::LIBAV LibDataChannel::LibDataChannel Threads::Threads nlohmann_json)
 #target_link_libraries(pic2video PRIVATE ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVUTIL_LIBRARY} ${AVDEVICE_LIBRARY})
