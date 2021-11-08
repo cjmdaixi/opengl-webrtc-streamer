@@ -7,9 +7,8 @@ Please make sure ffmpeg is installed first.
 CentOS and macos is recommended.
 
 ```shell
-cd src
-mkdir cmake-build-debug
-cmake ..
+cmake -B cmake-build-debug
+cd cmake-build-debug
 make
 ```
 
