@@ -16,9 +16,9 @@ void do_main(int argc,char* argv[])
     Streamer* streamer = new Streamer(*scene);
     SetScene(scene);
     scene->AttachStreamer(streamer);
-    streamer->BeginStream();
+    streamer->beginStream();
     scene->DrawScene();
-    streamer->EndStream();
+    streamer->endStream();
     scene->Terminate();
     return;
 }

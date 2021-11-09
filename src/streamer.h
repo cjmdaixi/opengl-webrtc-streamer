@@ -5,22 +5,39 @@
 #ifndef STREAMER_H
 #define STREAMER_H
 
+#include <rtc/rtc.hpp>
+#include <rtc/websocket.hpp>
+#include <nlohmann/json.hpp>
 #include "encoder.h"
 #include "rtmp_publisher.h"
 
 class Scene;
 
+using json = nlohmann::json;
+
 class Streamer {
 public:
     Streamer(Scene & scene);
-    void BeginStream();
-    void Encode(uint8_t* buffer);
-    void SetRtc();
-    void EndStream();
+    void beginStream();
+    void endStream();
+    void encode(uint8_t* buffer);
+private:
+    void initRtc();
 private:
     Scene & scene_;
     Encoder* encoder;
     RtmpPublisher* rtmp_publisher;
+
+private:
+    rtc::Configuration rtc_config;
+    std::string stunServer;
+    std::shared_ptr<rtc::WebSocket> ws;
+private:
+    void wsOnMessage(json message);
+    void createPeerConnection();
+    void startStream();
+    void createStream();
+    void addToStream();
 };
 
 

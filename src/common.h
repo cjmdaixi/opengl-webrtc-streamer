@@ -11,8 +11,8 @@
 static char* out_h264 = "out.h264";
 static char* RTMP_LIVESTEAM = "rtmp://localhost/live/livestream";
 static bool dump_video_option = false;
-static bool rtmp_publish_option = true;
-static bool rtc_publish_option = false;
+static bool rtmp_publish_option = false;
+static bool rtc_publish_option = true;
 // This is for screen saving
 #ifdef __APPLE__
 const int scale = 2;
@@ -23,22 +23,19 @@ const int scale = 1;
 // global
 const unsigned int screen_width = 800;
 const unsigned int screen_height = 600;
-
 const unsigned int SCR_WIDTH = screen_width * scale;
 const unsigned int SCR_HEIGHT = screen_height * scale;
-
-// Multi-thread
-static bool thread_semaphore = false;
-static std::condition_variable cv;
-
+// webrtc
+const std::string DEFAULT_IP_ADDRESS = "127.0.0.1";
+const uint16_t defaultPort = 8000;
 // FFMPEG parameters
 const int inlinesize[2] = {SCR_WIDTH*3,0}; // For sws_scale convert function
 
 static const char* rtmp_fout_name = "rtsp://localhost/livestream/live";
 
 // OpenGL parameters
-static const char* vs = "../Shaders/Cube.vs";
-static char* fs = "../Shaders/Cube.fs";
+static const char* vs = "../src/Shaders/Cube.vs";
+static char* fs = "../src/Shaders/Cube.fs";
 
 const float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,

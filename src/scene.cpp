@@ -174,7 +174,7 @@ void Scene::DrawScene()
 }
 
 void Scene::Notify(uint8_t* buf) {
-    streamer_->Encode(buf);
+    streamer_->encode(buf);
 }
 
 void Scene::Terminate()
