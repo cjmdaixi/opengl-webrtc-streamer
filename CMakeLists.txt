@@ -43,6 +43,13 @@ add_executable(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rtmp_publisher.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/streamer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/scene.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/rtc_publisher.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dispatchqueue.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/fileparser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/h264fileparser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/helpers.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/opusfileparser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/stream.cpp
         ${GLAD_SRC}
 )
 

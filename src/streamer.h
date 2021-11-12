@@ -30,16 +30,6 @@ private:
     void initRtmp();
     void rtmpPublish(uint8_t* buf,int size);
     void rtcPublish();
-private:
-    rtc::Configuration rtc_config;
-    std::string stunServer;
-    std::shared_ptr<rtc::WebSocket> ws;
-private:
-    void wsOnMessage(json message);
-    void createPeerConnection();
-    void startStream();
-    void createStream();
-    void addToStream();
 };
 
 
