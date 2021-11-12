@@ -94,7 +94,7 @@ void RtmpPublisher::publish(uint8_t* buf,int size)
     //p_pkt.size = datalen;
     /* copy packet (remuxing In the example)*/
     AVRational time_base;
-    time_base.den = 50;
+    time_base.den = 40;
     time_base.num = 1;
     p_pkt.pts = av_rescale_q((pts_cnt++) * 2, time_base, out_stream->time_base);
     p_pkt.dts = av_rescale_q_rnd(p_pkt.dts, out_stream->time_base, out_stream->time_base, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_PASS_MINMAX));

@@ -43,7 +43,7 @@ void Encoder::Init()
         return;
     }
     stream->r_frame_rate.den = 1;
-    stream->r_frame_rate.num = 25;
+    stream->r_frame_rate.num = 40;
     // AV_CODEC_ID is declared in common.h
     //codec = avcodec_find_encoder((AVCodecID) AV_CODEC_ID);
     codecCtx = stream->codec;
@@ -54,8 +54,8 @@ void Encoder::Init()
     codecCtx->width = SCR_WIDTH;
     codecCtx->height = SCR_HEIGHT;
     codecCtx->time_base.num = 1;
-    codecCtx->time_base.den = 25;
-    codecCtx->gop_size = 25;
+    codecCtx->time_base.den = 40;
+    codecCtx->gop_size = 40;
     //codecCtx->framerate = (AVRational){25,1};
     //codecCtx->bit_rate = SCR_HEIGHT * SCR_WIDTH * 3;
     codecCtx->qmin = 10;
