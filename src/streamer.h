@@ -22,12 +22,14 @@ public:
     void endStream();
     void encode(uint8_t* buffer);
 private:
-    void initRtc();
-private:
     Scene & scene_;
     Encoder* encoder;
     RtmpPublisher* rtmp_publisher;
-
+private:
+    void initRtc();
+    void initRtmp();
+    void rtmpPublish(uint8_t* buf,int size);
+    void rtcPublish();
 private:
     rtc::Configuration rtc_config;
     std::string stunServer;

@@ -15,7 +15,7 @@ RtmpPublisher::RtmpPublisher()
     pts_cnt = 0;
 }
 
-void RtmpPublisher::SetUp()
+void RtmpPublisher::setUp()
 {
     int ret = -1;
     // initialize avformat context
@@ -80,7 +80,7 @@ void RtmpPublisher::SetUp()
     }
 }
 
-void RtmpPublisher::Publish(AVPacket* pkt)
+void RtmpPublisher::publish(uint8_t* buf,int size)
 {
     int cnt =1;
     AVPacket p_pkt;
@@ -89,8 +89,8 @@ void RtmpPublisher::Publish(AVPacket* pkt)
     out_stream = ofmt_ctx->streams[videoIndex];
     av_init_packet(&p_pkt);
     p_pkt.stream_index = out_stream->index;
-    p_pkt.data = pkt->data;
-    p_pkt.size = pkt->size;
+    p_pkt.data = buf;
+    p_pkt.size = size;
     //p_pkt.size = datalen;
     /* copy packet (remuxing In the example)*/
     AVRational time_base;
@@ -111,7 +111,7 @@ void RtmpPublisher::Publish(AVPacket* pkt)
     av_packet_unref(&p_pkt);
 }
 
-void RtmpPublisher::EndPublish()
+void RtmpPublisher::endPublish()
 {
     avformat_free_context(ofmt_ctx);
 }

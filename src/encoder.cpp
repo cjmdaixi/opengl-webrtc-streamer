@@ -7,7 +7,6 @@
 #include "common.h"
 
 Encoder::Encoder(){
-    rtmpPublisher = nullptr;
     ofctx = nullptr;
     stream = nullptr;
     outputFormat = nullptr;
@@ -104,13 +103,7 @@ void Encoder::Init()
                                 SWS_BICUBIC,NULL,NULL,NULL);
 }
 
-void Encoder::InitRtmpPublisher()
-{
-    rtmpPublisher = new RtmpPublisher();
-    rtmpPublisher->SetUp();
-}
-
-void Encoder::GenOnePkt(uint8_t* buffer)
+void Encoder::GenOnePkt(uint8_t* buffer,uint8_t** ret_buf,int& ret_buf_size)
 {
     // TODO: please reverse the picture upside down
     memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
@@ -141,9 +134,9 @@ void Encoder::GenOnePkt(uint8_t* buffer)
         if(dump_video_option){
             DumpLocalVideo();
         }
-        if(rtmp_publish_option){
-            rtmpPublisher->Publish(pkt);
-        }
+        ret_buf_size = pkt->size;
+        *ret_buf = (uint8_t*)malloc(ret_buf_size*sizeof(uint8_t));
+        memcpy(*ret_buf,pkt->data,sizeof(uint8_t)*ret_buf_size);
         // TODO: send this pkt data to rtsp out file.
         av_packet_unref(pkt);
     }

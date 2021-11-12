@@ -30,13 +30,10 @@ class Encoder {
 public:
     Encoder();
     void Init();
-    void InitRtmpPublisher();
-    void GenOnePkt(uint8_t* buffer);
+    void GenOnePkt(uint8_t* buffer,uint8_t** ret_buf,int& ret_buf_size);
     void DumpLocalVideo();
     void FlushEncoder(int streamIndex);
     void EndEncode();
-private:
-    RtmpPublisher* rtmpPublisher;
 private:
     int frame_count;
     uint8_t * in_buf[2];

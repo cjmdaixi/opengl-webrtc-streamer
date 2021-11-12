@@ -19,9 +19,9 @@ extern "C"{
 class RtmpPublisher {
 public:
     RtmpPublisher();
-    void SetUp();
-    void Publish(AVPacket* pkt);
-    void EndPublish();
+    void setUp();
+    void publish(uint8_t* buf,int size);
+    void endPublish();
 private:
     int pts_cnt;
     AVOutputFormat *ofmt;

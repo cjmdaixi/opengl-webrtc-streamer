@@ -11,8 +11,8 @@
 static char* out_h264 = "out.h264";
 static char* RTMP_LIVESTEAM = "rtmp://localhost/live/livestream";
 static bool dump_video_option = false;
-static bool rtmp_publish_option = false;
-static bool rtc_publish_option = true;
+static bool rtmp_publish_option = true;
+static bool rtc_publish_option = false;
 // This is for screen saving
 #ifdef __APPLE__
 const int scale = 2;
