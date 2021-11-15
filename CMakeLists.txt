@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(crstreamer)
+project(ocs)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-D__STDC_CONSTANT_MACROS")
@@ -37,7 +37,7 @@ include_directories(3rd_party/glm)
 add_subdirectory(3rd_party/librtc)
 
 add_executable(
-        crstreamer
+        ocs
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/encoder.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rtmp_publisher.cpp
@@ -50,10 +50,11 @@ add_executable(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/helpers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/opusfileparser.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/stream.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/bufferparser.cpp
         ${GLAD_SRC}
 )
 
 find_package(Threads REQUIRED)
 #target_include_directories(pic2video PRIVATE ${AVCODEC_INCLUDE_DIR} ${AVFORMAT_INCLUDE_DIR} ${AVUTIL_INCLUDE_DIR} ${AVDEVICE_INCLUDE_DIR})
-target_link_libraries(crstreamer  ${LIBS} PkgConfig::LIBAV LibDataChannel::LibDataChannel Threads::Threads nlohmann_json)
+target_link_libraries(ocs ${LIBS} PkgConfig::LIBAV LibDataChannel::LibDataChannel Threads::Threads nlohmann_json)
 #target_link_libraries(pic2video PRIVATE ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVUTIL_LIBRARY} ${AVDEVICE_LIBRARY})
