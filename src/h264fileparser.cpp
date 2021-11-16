@@ -29,11 +29,9 @@
 
 using namespace std;
 
-H264FileParser::H264FileParser(string directory, uint32_t fps, bool loop): FileParser(directory, ".h264", fps, loop) { }
+H264FileParser::H264FileParser(uint32_t fps, bool loop) { }
 
-void H264FileParser::loadNextSample() {
-    FileParser::loadNextSample();
-
+void H264FileParser::loadNextSample(std::vector<std::byte>& sample) {
     unsigned long long i = 0;
     while (i < sample.size()) {
         assert(i + 4 < sample.size());

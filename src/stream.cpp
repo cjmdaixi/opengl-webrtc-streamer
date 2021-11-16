@@ -48,7 +48,7 @@ StreamSource::~StreamSource() {
     stop();
 }
 
-Stream::Stream(std::shared_ptr<StreamSource> video, std::shared_ptr<StreamSource> audio): std::enable_shared_from_this<Stream>(), video(video), audio(audio) { }
+Stream::Stream(std::shared_ptr<StreamSource> video): std::enable_shared_from_this<Stream>(), video(video) { }
 
 Stream::~Stream() {
     stop();
@@ -58,15 +58,11 @@ std::pair<std::shared_ptr<StreamSource>, Stream::StreamSourceType> Stream::unsaf
     std::shared_ptr<StreamSource> ss;
     StreamSourceType sst;
     uint64_t nextTime;
-    if (audio->getSampleTime_us() < video->getSampleTime_us()) {
-        ss = audio;
-        sst = StreamSourceType::Audio;
-        nextTime = audio->getSampleTime_us();
-    } else {
+
         ss = video;
         sst = StreamSourceType::Video;
         nextTime = video->getSampleTime_us();
-    }
+
 
     auto currentTime = currentTimeInMicroSeconds();
 
@@ -96,6 +92,17 @@ void Stream::sendSample() {
     });
 }
 
+void Stream::publishSample() {
+    //std::lock_guard lock(mutex);
+    if(!isRunning)
+        return;
+    auto ssSST = unsafePrepareForSample();
+    auto ss = ssSST.first;
+    auto sst = ssSST.second;
+    auto sample = ss->getSample();
+    sampleHandler(sst,ss->getSampleTime_us(),sample);
+}
+
 void Stream::onSample(std::function<void (StreamSourceType, uint64_t, rtc::binary)> handler) {
     sampleHandler = handler;
 }
@@ -107,11 +114,11 @@ void Stream::start() {
     }
     _isRunning = true;
     startTime = currentTimeInMicroSeconds();
-    audio->start();
+    //audio->start();
     video->start();
-    dispatchQueue.dispatch([this]() {
-        this->sendSample();
-    });
+//    dispatchQueue.dispatch([this]() {
+//        this->sendSample();
+//    });
 }
 
 void Stream::stop() {
@@ -121,7 +128,7 @@ void Stream::stop() {
     }
     _isRunning = false;
     dispatchQueue.removePending();
-    audio->stop();
+    //audio->stop();
     video->stop();
 };
 

@@ -6,11 +6,63 @@
 
 void RtcPublisher::setUp()
 {
+    Configuration config;
+    string stunServer = "stun:stun.l.google.com:19302";
+    cout << "Stun server is " << stunServer << endl;
+    config.iceServers.emplace_back(stunServer);
+    config.disableAutoNegotiation = true;
 
+    string localId = "server";
+    cout << "The local ID is: " << localId << endl;
+
+    auto ws = make_shared<WebSocket>();
+
+    ws->onOpen([]() { cout << "WebSocket connected, signaling ready" << endl; });
+
+    ws->onClosed([]() { cout << "WebSocket closed" << endl; });
+
+    ws->onError([](const string &error) { cout << "WebSocket failed: " << error << endl; });
+
+    ws->onMessage([&](variant<binary, string> data) {
+        if (!holds_alternative<string>(data))
+            return;
+
+        json message = json::parse(get<string>(data));
+        MainThread.dispatch([this,message, config, ws]() {
+            wsOnMessage(message, config, ws);
+        });
+    });
+
+    const string url = "ws://" + DEFAULT_IP_ADDRESS + ":" + to_string(defaultPort) + "/" + localId;
+    cout << "Url is " << url << endl;
+    ws->open(url);
+
+    cout << "Waiting for signaling to be connected..." << endl;
+    while (!ws->isOpen()) {
+        if (ws->isClosed())
+            return;
+        this_thread::sleep_for(100ms);
+    }
+
+    while (true) {
+        string id;
+        cout << "Enter to exit" << endl;
+        cin >> id;
+        cin.ignore();
+        cout << "exiting" << endl;
+        break;
+    }
+
+    cout << "Cleaning up..." << endl;
+    return;
 }
 
 void RtcPublisher::publish(uint8_t *buf, int size) {
-
+    //TODO: current buf is raw, no pps and sps data
+    std::vector<uint8_t> buffer(buf,buf+size);
+    auto sample = *reinterpret_cast<std::vector<std::byte>*>(&buffer);
+    video->loadNextSample(sample);
+    avStream.value()->publishSample();
 }
 
 shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &config, weak_ptr<WebSocket> wws, string id)
@@ -58,15 +110,6 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
         cout << "Video from " << id << " opened" << endl;
     });
 
-    client->audio = addAudio(pc, 111, 2, "audio-stream", "stream1", [this,id, wc = make_weak_ptr(client)]() {
-        MainThread.dispatch([this,wc]() {
-            if (auto c = wc.lock()) {
-                addToStream(c, false);
-            }
-        });
-        cout << "Audio from " << id << " opened" << endl;
-    });
-
     auto dc = pc->createDataChannel("ping-pong");
     dc->onOpen([id, wdc = make_weak_ptr(dc)]() {
         if (auto dc = wdc.lock()) {
@@ -86,13 +129,9 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
     return client;
 };
 
-shared_ptr<Stream> RtcPublisher::createStream(const string h264Samples, const unsigned int fps,
-                                              const string opusSamples) {
-    auto video = make_shared<H264FileParser>(h264Samples, fps, true);
-    // audio source
-    auto audio = make_shared<OPUSFileParser>(opusSamples, true);
+shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
 
-    auto stream = make_shared<Stream>(video, audio);
+    auto stream = make_shared<Stream>(video);
     // set callback responsible for sample sending
     stream->onSample([this,ws = make_weak_ptr(stream)](Stream::StreamSourceType type, uint64_t sampleTime, rtc::binary sample) {
         vector<ClientTrack> tracks{};
@@ -148,6 +187,7 @@ shared_ptr<Stream> RtcPublisher::createStream(const string h264Samples, const un
             if (clients.empty()) {
                 // we have no clients, stop the stream
                 if (auto stream = ws.lock()) {
+                    stream_request = false;
                     stream->stop();
                 }
             }
@@ -199,12 +239,12 @@ void RtcPublisher::startStream() {
             return;
         }
     } else {
-        stream = createStream(h264SamplesDirectory, 30, opusSamplesDirectory);
+        stream = createStream(30);
         avStream = stream;
     }
     stream->start();
 }
-void RtcPublisher::wsOnMessage(json message) {
+void RtcPublisher::wsOnMessage(json message,Configuration config, shared_ptr<WebSocket> ws ) {
     auto it = message.find("id");
     if (it == message.end())
         return;
@@ -215,6 +255,7 @@ void RtcPublisher::wsOnMessage(json message) {
     string type = it->get<string>();
 
     if (type == "streamRequest") {
+        stream_request = true;
         shared_ptr<Client> c = createPeerConnection(config, make_weak_ptr(ws), id);
         clients.emplace(id, c);
     } else if (type == "answer") {
@@ -253,32 +294,6 @@ shared_ptr<ClientTrackData> RtcPublisher::addVideo(const shared_ptr<PeerConnecti
     auto trackData = make_shared<ClientTrackData>(track, srReporter);
     return trackData;
 }
-shared_ptr<ClientTrackData> RtcPublisher::addAudio(const shared_ptr<PeerConnection> pc, const uint8_t payloadType,
-                                     const uint32_t ssrc, const string cname, const string msid,
-                                     const function<void (void)> onOpen)
-{
-    auto audio = Description::Audio(cname);
-    audio.addOpusCodec(payloadType);
-    audio.addSSRC(ssrc, cname, msid, cname);
-    auto track = pc->addTrack(audio);
-    // create RTP configuration
-    auto rtpConfig = make_shared<RtpPacketizationConfig>(ssrc, cname, payloadType, OpusRtpPacketizer::defaultClockRate);
-    // create packetizer
-    auto packetizer = make_shared<OpusRtpPacketizer>(rtpConfig);
-    // create opus handler
-    auto opusHandler = make_shared<OpusPacketizationHandler>(packetizer);
-    // add RTCP SR handler
-    auto srReporter = make_shared<RtcpSrReporter>(rtpConfig);
-    opusHandler->addToChain(srReporter);
-    // add RTCP NACK handler
-    auto nackResponder = make_shared<RtcpNackResponder>();
-    opusHandler->addToChain(nackResponder);
-    // set handler
-    track->setMediaHandler(opusHandler);
-    track->onOpen(onOpen);
-    auto trackData = make_shared<ClientTrackData>(track, srReporter);
-    return trackData;
-}
 
 void RtcPublisher::sendInitialNalus(shared_ptr<Stream> stream, shared_ptr<ClientTrackData> video) {
     auto h264 = dynamic_cast<H264FileParser *>(stream->video.get());
@@ -286,7 +301,8 @@ void RtcPublisher::sendInitialNalus(shared_ptr<Stream> stream, shared_ptr<Client
 
     // send previous NALU key frame so users don't have to wait to see stream works
     if (!initialNalus.empty()) {
-        const double frameDuration_s = double(h264->sampleDuration_us) / (1000 * 1000);
+        // const double frameDuration_s = double(h264->sampleDuration_us) / (1000 * 1000);
+        const double frameDuration_s = double(30) / (1000 * 1000);
         const uint32_t frameTimestampDuration = video->sender->rtpConfig->secondsToTimestamp(frameDuration_s);
         video->sender->rtpConfig->timestamp = video->sender->rtpConfig->startTimestamp - frameTimestampDuration * 2;
         video->track->send(initialNalus);

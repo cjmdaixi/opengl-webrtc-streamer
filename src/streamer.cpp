@@ -37,12 +37,18 @@ void Streamer::encode(uint8_t *buffer)
     uint8_t* ret_buf = nullptr;
     encoder->GenOnePkt(buffer,&ret_buf,ret_buf_size);
     if(rtmp_publish_option) rtmpPublish(ret_buf,ret_buf_size);
-    if(rtc_publish_option) ;
+    if(rtc_publish_option)
+        rtcPublish(ret_buf,ret_buf_size);
     free(ret_buf); // malloced in encoder
 }
 
 void Streamer::rtmpPublish(uint8_t *buf, int size) {
     rtmp_publisher->publish(buf,size);
+}
+
+void Streamer::rtcPublish(uint8_t *buf, int size) {
+    if(rtc_publisher->stream_request)
+        rtc_publisher->publish(buf,size);
 }
 
 void Streamer::endStream()
@@ -52,9 +58,5 @@ void Streamer::endStream()
 
 void Streamer::initRtc()
 {
-    string stunServer = "stun:stun.l.google.com:19302";
-    std::cout<<"Stun server is"<<stunServer<<std::endl;
-    rtc_config.iceServers.emplace_back(stunServer);
-    rtc_config.disableAutoNegotiation = true;
-    std::cout<<"gg"<<std::endl;
+    rtc_publisher = new RtcPublisher();
 }

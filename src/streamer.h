@@ -10,6 +10,7 @@
 #include <nlohmann/json.hpp>
 #include "encoder.h"
 #include "rtmp_publisher.h"
+#include "rtc_publisher.h"
 
 class Scene;
 
@@ -25,11 +26,12 @@ private:
     Scene & scene_;
     Encoder* encoder;
     RtmpPublisher* rtmp_publisher;
+    RtcPublisher* rtc_publisher;
 private:
     void initRtc();
     void initRtmp();
     void rtmpPublish(uint8_t* buf,int size);
-    void rtcPublish();
+    void rtcPublish(uint8_t* buf,int size);
 };
 
 
