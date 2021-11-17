@@ -36,7 +36,8 @@ void Streamer::encode(uint8_t *buffer)
     int ret_buf_size = 0;
     uint8_t* ret_buf = nullptr;
     encoder->GenOnePkt(buffer,&ret_buf,ret_buf_size);
-    if(rtmp_publish_option) rtmpPublish(ret_buf,ret_buf_size);
+    if(rtmp_publish_option)
+        rtmpPublish(ret_buf,ret_buf_size);
     if(rtc_publish_option)
         rtcPublish(ret_buf,ret_buf_size);
     free(ret_buf); // malloced in encoder

@@ -31,7 +31,7 @@ public:
     StreamSource() { }
     virtual void start() = 0;
     virtual void stop();
-    virtual void loadNextSample() = 0;
+    virtual void loadNextSample(std::vector<std::byte>& buffer) = 0;
 
     inline uint64_t getSampleTime_us() { return sampleTime_us; }
     inline rtc::binary getSample() { return sample; }

@@ -29,8 +29,11 @@ class H264FileParser : public StreamSource{
     std::optional<std::vector<std::byte>> previousUnitType8 = std::nullopt;
 
 public:
+    void start() override;
+    void stop() override;
+    const uint64_t sampleDuration_us;
     H264FileParser(uint32_t fps, bool loop);
-    void loadNextSample(std::vector<std::byte>& sample);
+    void loadNextSample(std::vector<std::byte>& buffer);
     std::vector<std::byte> initialNALUS();
 };
 

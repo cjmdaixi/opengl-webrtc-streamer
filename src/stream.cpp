@@ -76,19 +76,19 @@ std::pair<std::shared_ptr<StreamSource>, Stream::StreamSourceType> Stream::unsaf
 }
 
 void Stream::sendSample() {
-    std::lock_guard lock(mutex);
-    if (!isRunning) {
-        return;
-    }
-    auto ssSST = unsafePrepareForSample();
-    auto ss = ssSST.first;
-    auto sst = ssSST.second;
-    auto sample = ss->getSample();
-    sampleHandler(sst, ss->getSampleTime_us(), sample);
-    ss->loadNextSample();
-    dispatchQueue.dispatch([this]() {
-        this->sendSample();
-    });
+//    std::lock_guard lock(mutex);
+//    if (!isRunning) {
+//        return;
+//    }
+//    auto ssSST = unsafePrepareForSample();
+//    auto ss = ssSST.first;
+//    auto sst = ssSST.second;
+//    auto sample = ss->getSample();
+//    sampleHandler(sst, ss->getSampleTime_us(), sample);
+//    ss->loadNextSample();
+//    dispatchQueue.dispatch([this]() {
+//        this->sendSample();
+//    });
 }
 
 void Stream::publishSample() {
@@ -113,7 +113,6 @@ void Stream::start() {
     }
     _isRunning = true;
     startTime = currentTimeInMicroSeconds();
-    //audio->start();
     video->start();
 //    dispatchQueue.dispatch([this]() {
 //        this->sendSample();

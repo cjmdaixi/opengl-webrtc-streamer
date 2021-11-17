@@ -48,8 +48,9 @@ void RtcPublisher::setUp()
 
 void RtcPublisher::publish(uint8_t *buf, int size) {
     //TODO: current buf is raw, no pps and sps data
-    std::vector<uint8_t> buffer(buf,buf+size);
+    std::vector<uint8_t> buffer(buf,buf+size*sizeof(uint8_t));
     auto sample = *reinterpret_cast<std::vector<std::byte>*>(&buffer);
+    assert(sample.size() == size);
     video->loadNextSample(sample);
     avStream.value()->publishSample();
 }
@@ -72,7 +73,7 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
     });
 
     pc->onGatheringStateChange(
-            [wpc = make_weak_ptr(pc), id, wws](PeerConnection::GatheringState state) {
+            [this,wpc = make_weak_ptr(pc), id, wws](PeerConnection::GatheringState state) {
                 cout << "Gathering State: " << state << endl;
                 if (state == PeerConnection::GatheringState::Complete) {
                     if(auto pc = wpc.lock()) {
@@ -87,6 +88,7 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
                             ws->send(message.dump());
                         }
                     }
+                    connection_setted = true;
                 }
             });
 
@@ -119,7 +121,6 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
 };
 
 shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
-
     auto stream = make_shared<Stream>(video);
     // set callback responsible for sample sending
     stream->onSample([this,ws = make_weak_ptr(stream)](Stream::StreamSourceType type, uint64_t sampleTime, rtc::binary sample) {
@@ -244,10 +245,8 @@ void RtcPublisher::wsOnMessage(json message,Configuration config, shared_ptr<Web
     string type = it->get<string>();
 
     if (type == "streamRequest") {
-        connection_setted = true;
         shared_ptr<Client> c = createPeerConnection(config, make_weak_ptr(ws), id);
         clients.emplace(id, c);
-        connection_setted = true;
     } else if (type == "answer") {
         shared_ptr<Client> c;
         if (auto jt = clients.find(id); jt != clients.end()) {

@@ -29,10 +29,21 @@
 
 using namespace std;
 
-H264FileParser::H264FileParser(uint32_t fps, bool loop) { }
+H264FileParser::H264FileParser(uint32_t fps, bool loop):sampleDuration_us(1000*1000/fps),StreamSource() {}
 
-void H264FileParser::loadNextSample(std::vector<std::byte>& sample) {
+void H264FileParser::start(){
+    sampleTime_us = std::numeric_limits<uint64_t>::max() - sampleDuration_us + 1;
+}
+
+void H264FileParser::stop(){
+    StreamSource::stop();
+}
+
+void H264FileParser::loadNextSample(std::vector<std::byte>& buffer) {
     unsigned long long i = 0;
+    sampleTime_us += sampleDuration_us;
+    int flag = 0;
+    sample = buffer;
     while (i < sample.size()) {
         assert(i + 4 < sample.size());
         auto lengthPtr = (uint32_t *) (sample.data() + i);
