@@ -59,10 +59,9 @@ std::pair<std::shared_ptr<StreamSource>, Stream::StreamSourceType> Stream::unsaf
     StreamSourceType sst;
     uint64_t nextTime;
 
-        ss = video;
-        sst = StreamSourceType::Video;
-        nextTime = video->getSampleTime_us();
-
+    ss = video;
+    sst = StreamSourceType::Video;
+    nextTime = video->getSampleTime_us();
 
     auto currentTime = currentTimeInMicroSeconds();
 

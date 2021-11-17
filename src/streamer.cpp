@@ -47,7 +47,7 @@ void Streamer::rtmpPublish(uint8_t *buf, int size) {
 }
 
 void Streamer::rtcPublish(uint8_t *buf, int size) {
-    if(rtc_publisher->stream_request)
+    if(rtc_publisher->connection_setted)
         rtc_publisher->publish(buf,size);
 }
 
@@ -59,4 +59,5 @@ void Streamer::endStream()
 void Streamer::initRtc()
 {
     rtc_publisher = new RtcPublisher();
+    rtc_publisher->setUp();
 }

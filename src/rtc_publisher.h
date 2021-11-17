@@ -20,17 +20,20 @@ template <class T> weak_ptr<T> make_weak_ptr(shared_ptr<T> ptr) { return ptr; }
 
 class RtcPublisher {
 public:
-    RtcPublisher() {
-        stream_request = false;
-        setUp();
+    RtcPublisher(){
+        ws = make_shared<WebSocket>();
+        connection_setted = false;
+        rtcThread = new DispatchQueue("RtcThread") ;
     }
     void setUp();
     void publish(uint8_t *buf, int size);
-    bool stream_request;
+    bool connection_setted;
 protected:
+    Configuration rtc_config;
+    shared_ptr<WebSocket> ws;
     std::shared_ptr<H264FileParser> video;
     optional<shared_ptr<Stream>> avStream;
-    DispatchQueue MainThread = DispatchQueue("Main");
+    DispatchQueue* rtcThread;
 
     unordered_map<string, shared_ptr<Client>> clients{};
 

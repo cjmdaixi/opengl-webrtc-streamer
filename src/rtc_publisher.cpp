@@ -6,17 +6,15 @@
 
 void RtcPublisher::setUp()
 {
-    Configuration config;
+    Configuration* config = &rtc_config;
     string stunServer = "stun:stun.l.google.com:19302";
     cout << "Stun server is " << stunServer << endl;
-    config.iceServers.emplace_back(stunServer);
-    config.disableAutoNegotiation = true;
+    rtc_config.iceServers.emplace_back(stunServer);
+    rtc_config.disableAutoNegotiation = true;
 
     string localId = "server";
     cout << "The local ID is: " << localId << endl;
-
-    auto ws = make_shared<WebSocket>();
-
+    // ws = make_shared<WebSocket>();
     ws->onOpen([]() { cout << "WebSocket connected, signaling ready" << endl; });
 
     ws->onClosed([]() { cout << "WebSocket closed" << endl; });
@@ -26,10 +24,9 @@ void RtcPublisher::setUp()
     ws->onMessage([&](variant<binary, string> data) {
         if (!holds_alternative<string>(data))
             return;
-
         json message = json::parse(get<string>(data));
-        MainThread.dispatch([this,message, config, ws]() {
-            wsOnMessage(message, config, ws);
+        rtcThread->dispatch([this,message]() {
+            wsOnMessage(message, rtc_config, ws);
         });
     });
 
@@ -44,16 +41,8 @@ void RtcPublisher::setUp()
         this_thread::sleep_for(100ms);
     }
 
-    while (true) {
-        string id;
-        cout << "Enter to exit" << endl;
-        cin >> id;
-        cin.ignore();
-        cout << "exiting" << endl;
-        break;
-    }
-
-    cout << "Cleaning up..." << endl;
+    //cout<<"Cleaning up..."<<endl;
+    cout<<"websocket setup"<<endl;
     return;
 }
 
@@ -76,7 +65,7 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
             state == PeerConnection::State::Failed ||
             state == PeerConnection::State::Closed) {
             // remove disconnected client
-            MainThread.dispatch([this,id]() {
+            rtcThread->dispatch([this,id]() {
                 clients.erase(id);
             });
         }
@@ -102,7 +91,7 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
             });
 
     client->video = addVideo(pc, 102, 1, "video-stream", "stream1", [this,id, wc = make_weak_ptr(client)]() {
-        MainThread.dispatch([this,wc]() {
+        rtcThread->dispatch([this,wc]() {
             if (auto c = wc.lock()) {
                 addToStream(c, true);
             }
@@ -183,11 +172,11 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
                 }
             }
         }
-        MainThread.dispatch([this,ws]() {
+        rtcThread->dispatch([this,ws]() {
             if (clients.empty()) {
                 // we have no clients, stop the stream
                 if (auto stream = ws.lock()) {
-                    stream_request = false;
+                    connection_setted = false;
                     stream->stop();
                 }
             }
@@ -255,9 +244,10 @@ void RtcPublisher::wsOnMessage(json message,Configuration config, shared_ptr<Web
     string type = it->get<string>();
 
     if (type == "streamRequest") {
-        stream_request = true;
+        connection_setted = true;
         shared_ptr<Client> c = createPeerConnection(config, make_weak_ptr(ws), id);
         clients.emplace(id, c);
+        connection_setted = true;
     } else if (type == "answer") {
         shared_ptr<Client> c;
         if (auto jt = clients.find(id); jt != clients.end()) {
