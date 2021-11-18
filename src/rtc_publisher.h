@@ -22,13 +22,11 @@ class RtcPublisher {
 public:
     RtcPublisher(){
         ws = make_shared<WebSocket>();
-        connection_setted = false;
         rtcThread = new DispatchQueue("RtcThread") ;
         video = make_shared<H264FileParser>(30,true);
     }
     void setUp();
     void publish(uint8_t *buf, int size);
-    bool connection_setted;
 protected:
     Configuration rtc_config;
     shared_ptr<WebSocket> ws;

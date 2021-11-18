@@ -48,11 +48,14 @@ void RtcPublisher::setUp()
 
 void RtcPublisher::publish(uint8_t *buf, int size) {
     //TODO: current buf is raw, no pps and sps data
+    if(avStream.has_value() == false)
+        return;
     std::vector<uint8_t> buffer(buf,buf+size*sizeof(uint8_t));
     auto sample = *reinterpret_cast<std::vector<std::byte>*>(&buffer);
     assert(sample.size() == size);
     video->loadNextSample(sample);
-    avStream.value()->publishSample();
+    if(avStream.value()->isRunning)
+        avStream.value()->publishSample();
 }
 
 shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &config, weak_ptr<WebSocket> wws, string id)
@@ -88,7 +91,6 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
                             ws->send(message.dump());
                         }
                     }
-                    connection_setted = true;
                 }
             });
 
@@ -128,7 +130,7 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
         string streamType = type == Stream::StreamSourceType::Video ? "video" : "audio";
         // get track for given type
         function<optional<shared_ptr<ClientTrackData>> (shared_ptr<Client>)> getTrackData = [type](shared_ptr<Client> client) {
-            return type == Stream::StreamSourceType::Video ? client->video : client->audio;
+            return client->video;
         };
         // get all clients with Ready state
         for(auto id_client: clients) {
@@ -140,6 +142,7 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
                 tracks.push_back(ClientTrack(id, trackData));
             }
         }
+        std::cout<<"I am here"<<std::endl;
         if (!tracks.empty()) {
             for (auto clientTrack: tracks) {
                 auto client = clientTrack.id;
@@ -177,7 +180,6 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
             if (clients.empty()) {
                 // we have no clients, stop the stream
                 if (auto stream = ws.lock()) {
-                    connection_setted = false;
                     stream->stop();
                 }
             }
@@ -188,26 +190,22 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
 
 void RtcPublisher::addToStream(shared_ptr<Client> client, bool isAddingVideo) {
     if (client->getState() == Client::State::Waiting) {
-        client->setState(isAddingVideo ? Client::State::WaitingForAudio : Client::State::WaitingForVideo);
-    } else if ((client->getState() == Client::State::WaitingForAudio && !isAddingVideo)
-               || (client->getState() == Client::State::WaitingForVideo && isAddingVideo)) {
+        client->setState(Client::State::WaitingForVideo);}
+    if (client->getState() == Client::State::WaitingForVideo) {
 
         // Audio and video tracks are collected now
-        assert(client->video.has_value() && client->audio.has_value());
+        assert(client->video.has_value());
 
         auto video = client->video.value();
-        auto audio = client->audio.value();
 
         auto currentTime_us = double(currentTimeInMicroSeconds());
         auto currentTime_s = currentTime_us / (1000 * 1000);
 
         // set start time of stream
         video->sender->rtpConfig->setStartTime(currentTime_s, RtpPacketizationConfig::EpochStart::T1970);
-        audio->sender->rtpConfig->setStartTime(currentTime_s, RtpPacketizationConfig::EpochStart::T1970);
 
         // start stat recording of RTCP SR
         video->sender->startRecording();
-        audio->sender->startRecording();
 
         if (avStream.has_value()) {
             sendInitialNalus(avStream.value(), video);

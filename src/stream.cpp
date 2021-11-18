@@ -96,9 +96,11 @@ void Stream::publishSample() {
     if(!isRunning)
         return;
     auto ssSST = unsafePrepareForSample();
+    printf("hello world\n");
     auto ss = ssSST.first;
     auto sst = ssSST.second;
     auto sample = ss->getSample();
+    printf("h2\n");
     sampleHandler(sst,ss->getSampleTime_us(),sample);
 }
 

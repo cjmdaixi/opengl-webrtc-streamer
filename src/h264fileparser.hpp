@@ -24,9 +24,9 @@
 #include "stream.hpp"
 
 class H264FileParser : public StreamSource{
-    std::optional<std::vector<std::byte>> previousUnitType5 = std::nullopt;
-    std::optional<std::vector<std::byte>> previousUnitType7 = std::nullopt;
-    std::optional<std::vector<std::byte>> previousUnitType8 = std::nullopt;
+//    std::optional<std::vector<std::byte>> previousUnitType5 = std::nullopt;
+//    std::optional<std::vector<std::byte>> previousUnitType7 = std::nullopt;
+//    std::optional<std::vector<std::byte>> previousUnitType8 = std::nullopt;
 
 public:
     void start() override;
