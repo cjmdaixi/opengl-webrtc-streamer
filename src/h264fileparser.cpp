@@ -69,18 +69,18 @@ void H264FileParser::loadNextSample(std::vector<std::byte>& buffer) {
 }
 
 vector<byte> H264FileParser::initialNALUS() {
-//    vector<byte> units{};
-//    if (previousUnitType7.has_value()) {
-//        auto nalu = previousUnitType7.value();
-//        units.insert(units.end(), nalu.begin(), nalu.end());
-//    }
-//    if (previousUnitType8.has_value()) {
-//        auto nalu = previousUnitType8.value();
-//        units.insert(units.end(), nalu.begin(), nalu.end());
-//    }
-//    if (previousUnitType5.has_value()) {
-//        auto nalu = previousUnitType5.value();
-//        units.insert(units.end(), nalu.begin(), nalu.end());
-//    }
-//    return units;
+    vector<byte> units{};
+    if (previousUnitType7.has_value()) {
+        auto nalu = previousUnitType7.value();
+        units.insert(units.end(), nalu.begin(), nalu.end());
+    }
+    if (previousUnitType8.has_value()) {
+        auto nalu = previousUnitType8.value();
+        units.insert(units.end(), nalu.begin(), nalu.end());
+    }
+    if (previousUnitType5.has_value()) {
+        auto nalu = previousUnitType5.value();
+        units.insert(units.end(), nalu.begin(), nalu.end());
+    }
+    return units;
 }

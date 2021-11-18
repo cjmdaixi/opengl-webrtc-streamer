@@ -125,6 +125,7 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
 shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
     auto stream = make_shared<Stream>(video);
     // set callback responsible for sample sending
+    std::cout<<"new stream created"<<std::endl;
     stream->onSample([this,ws = make_weak_ptr(stream)](Stream::StreamSourceType type, uint64_t sampleTime, rtc::binary sample) {
         vector<ClientTrack> tracks{};
         string streamType = type == Stream::StreamSourceType::Video ? "video" : "audio";
@@ -142,7 +143,6 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
                 tracks.push_back(ClientTrack(id, trackData));
             }
         }
-        std::cout<<"I am here"<<std::endl;
         if (!tracks.empty()) {
             for (auto clientTrack: tracks) {
                 auto client = clientTrack.id;
