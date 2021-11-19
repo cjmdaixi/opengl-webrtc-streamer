@@ -50,6 +50,12 @@ void H264FileParser::loadNextSample(std::vector<std::byte>& buffer) {
 //        uint32_t length = ntohl(*lengthPtr);
 //        auto naluStartIndex = i + 4;
 //        auto naluEndIndex = naluStartIndex + length;
+//        if(naluEndIndex > sample.size()){
+//            ofstream ofs("xxx.h264");
+//            std::vector<uint8_t> aloha = *reinterpret_cast<std::vector<uint8_t> *>(&buffer);
+//            for(int i = 0 ; i < buffer.size();i++)
+//                ofs<<aloha[i];
+//        }
 //        assert(naluEndIndex <= sample.size());
 //        auto header = reinterpret_cast<rtc::NalUnitHeader *>(sample.data() + naluStartIndex);
 //        auto type = header->unitType();

@@ -23,7 +23,7 @@ public:
     RtcPublisher(){
         ws = make_shared<WebSocket>();
         rtcThread = new DispatchQueue("RtcThread") ;
-        video = make_shared<H264FileParser>(30,true);
+        video = make_shared<H264FileParser>(25,true);
     }
     void setUp();
     void publish(uint8_t *buf, int size);

@@ -24,59 +24,62 @@ void Encoder::Init()
     av_register_all();
     avcodec_register_all();
     avformat_network_init();
-
+    int ret = 0;
     in_buf[0] = (uint8_t*)malloc(sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
     in_buf[1] = nullptr;
 
     // Output file context
+
     avformat_alloc_output_context2(&ofctx,NULL,NULL,out_filename);
     outputFormat = ofctx->oformat;
 
-    if(avio_open(&ofctx->pb,out_filename,AVIO_FLAG_READ_WRITE) < 0)
+    if(avio_open2(&ofctx->pb,out_filename,AVIO_FLAG_WRITE, nullptr,nullptr) < 0)
     {
         std::cout << "open outfile error" << std::endl;
         return;
     }
-    stream = avformat_new_stream(ofctx,NULL);
+
+    codec = avcodec_find_encoder(AV_CODEC_ID_H264);
+    stream = avformat_new_stream(ofctx,codec);
+    codecCtx = avcodec_alloc_context3(codec);
+
     if(stream == nullptr){
         std::cout<<"Create new stream fails"<<std::endl;
         return;
     }
-    stream->r_frame_rate.den = 1;
-    stream->r_frame_rate.num = 40;
-    // AV_CODEC_ID is declared in common.h
-    //codec = avcodec_find_encoder((AVCodecID) AV_CODEC_ID);
-    codecCtx = stream->codec;
-    codecCtx->codec_id = outputFormat->video_codec;
+    const AVRational dst_fps = {25,1};
+    codecCtx->codec_tag = 0;
+    codecCtx->codec_id = AV_CODEC_ID_H264;
     codecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
     codecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
-    codecCtx->bit_rate = 400000;
     codecCtx->width = SCR_WIDTH;
     codecCtx->height = SCR_HEIGHT;
-    codecCtx->time_base.num = 1;
-    codecCtx->time_base.den = 40;
-    codecCtx->gop_size = 40;
-    //codecCtx->framerate = (AVRational){25,1};
+    codecCtx->gop_size = 25;
+    codecCtx->framerate = dst_fps;
+    codecCtx->time_base = av_inv_q(dst_fps);
     //codecCtx->bit_rate = SCR_HEIGHT * SCR_WIDTH * 3;
-    codecCtx->qmin = 10;
-    codecCtx->qmax = 51;
     codecCtx->max_b_frames = 0;
+    if(ofctx->oformat->flags & AVFMT_GLOBALHEADER){
+        codecCtx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+    }
+    ret = avcodec_parameters_from_context(stream->codecpar,codecCtx);
+    if(ret < 0){
+        std::cout<<"Could not initialize stream codec parameters"<<std::endl;
+        exit(1);
+    }
+
     AVDictionary* para = nullptr;
     if(codecCtx->codec_id == AV_CODEC_ID_H264){
         av_dict_set(&para,"preset","slow",0);
         av_dict_set(&para,"tune","zerolatency",0);
     }
-
-    codec = avcodec_find_encoder(codecCtx->codec_id);
-    if(!codec){
-        std::cout<<"can not find encoder"<<std::endl;
-        return;
-    }
-    int ret = avcodec_open2(codecCtx,codec,&para);
+    ret = avcodec_open2(codecCtx,codec,&para);
     if(ret < 0){
         std::cout<<"avcodec_open2 failed"<<std::endl;
         return;
     }
+    stream->codecpar->extradata_size = codecCtx->extradata_size;
+    stream->codecpar->extradata = codecCtx->extradata;
     avformat_write_header(ofctx,NULL);
     pkt = av_packet_alloc();
     if(!pkt)
@@ -135,6 +138,7 @@ void Encoder::GenOnePkt(uint8_t* buffer,uint8_t** ret_buf,int& ret_buf_size)
             DumpLocalVideo();
         }
         ret_buf_size = pkt->size;
+        //printf("%d\n",ret_buf_size);
         *ret_buf = (uint8_t*)malloc(ret_buf_size*sizeof(uint8_t));
         memcpy(*ret_buf,pkt->data,sizeof(uint8_t)*ret_buf_size);
         // TODO: send this pkt data to rtsp out file.

@@ -162,7 +162,7 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
                 if (rtpConfig->timestampToSeconds(reportElapsedTimestamp) > 1) {
                     trackData->sender->setNeedsToReport();
                 }
-                cout << "Sending " << streamType << " sample with size: " << to_string(sample.size()) << " to " << client << endl;
+                cout << "Sending " << streamType << " frame with size: " << to_string(sample.size()) << " to " << client << endl;
                 bool send = false;
                 try {
                     // send sample
@@ -266,7 +266,7 @@ shared_ptr<ClientTrackData> RtcPublisher::addVideo(const shared_ptr<PeerConnecti
     // create RTP configuration
     auto rtpConfig = make_shared<RtpPacketizationConfig>(ssrc, cname, payloadType, H264RtpPacketizer::defaultClockRate);
     // create packetizer
-    auto packetizer = make_shared<H264RtpPacketizer>(H264RtpPacketizer::Separator::Length, rtpConfig);
+    auto packetizer = make_shared<H264RtpPacketizer>(H264RtpPacketizer::Separator::LongStartSequence, rtpConfig);
     // create H264 handler
     auto h264Handler = make_shared<H264PacketizationHandler>(packetizer);
     // add RTCP SR handler
