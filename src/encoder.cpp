@@ -109,6 +109,7 @@ void Encoder::Init()
 void Encoder::GenOnePkt(uint8_t* buffer,uint8_t** ret_buf,int& ret_buf_size)
 {
     // TODO: please reverse the picture upside down
+    flip(&buffer);
     memcpy(in_buf[0],buffer,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
     in_buf[1] = nullptr;
     // Dump
@@ -207,7 +208,10 @@ void Encoder::rgb24toppm(uint8_t *buf, int width, int height)
 {
     FILE* fp = fopen("rgb24to.ppm","wb+");
     write_ppm_header(fp);
-    for(int j = height -1 ;j >=0 ;j--){
+//    for(int j = height -1 ;j >=0 ;j--){
+//        fwrite(buf+j*width*3,1,width*3,fp);
+//    }
+    for(int j = 0; j < height;j++){
         fwrite(buf+j*width*3,1,width*3,fp);
     }
     fclose(fp);
@@ -218,4 +222,17 @@ void Encoder::write_ppm_header(FILE *fp)
     fprintf(fp,"P6\n");
     fprintf(fp,"%d %d\n",SCR_WIDTH,SCR_HEIGHT);
     fprintf(fp,"%d\n",255);
+}
+
+void Encoder::flip(uint8_t** buf)
+{
+    int totalLength = SCR_HEIGHT*SCR_WIDTH*3;
+    int oneLineLength = SCR_WIDTH*3;
+    uint8_t* tmp = (uint8_t*)malloc(SCR_HEIGHT*SCR_WIDTH*3);
+    memcpy(tmp,*buf,SCR_WIDTH*SCR_HEIGHT*3);
+    memset(*buf,0,sizeof(uint8_t)*SCR_HEIGHT*SCR_WIDTH*3);
+    for(int i = 0; i < SCR_HEIGHT;i++){
+        memcpy(*buf+oneLineLength*i,tmp+totalLength-oneLineLength*(i+1),oneLineLength);
+    }
+    // rgb24toppm(*buf,SCR_WIDTH,SCR_HEIGHT);
 }

@@ -53,6 +53,7 @@ private:
     void rgb24toppm(uint8_t* buf,int width,int height);
     void yuv420toppm(AVFrame* frame);
     void write_ppm_header(FILE* fp);
+    void flip(uint8_t** buf);
 };
 
 
