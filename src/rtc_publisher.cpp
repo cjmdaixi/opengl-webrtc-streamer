@@ -48,19 +48,28 @@ void RtcPublisher::setUp()
 
 void RtcPublisher::publish(uint8_t *buf, int size) {
     //TODO: current buf is raw, no pps and sps data
-    if(avStream.has_value() == false)
+    int index = 0;
+    if(avStream.has_value() == false || !avStream.value()->isRunning)
         return;
     std::vector<uint8_t> buffer(buf,buf+size*sizeof(uint8_t));
-    auto sample = *reinterpret_cast<std::vector<std::byte>*>(&buffer);
-    assert(sample.size() == size);
-    video->loadNextSample(sample);
-    if(avStream.value()->isRunning)
-        avStream.value()->publishSample();
+    video->loadNextSample(buffer);
+    avStream.value()->publishSample();
+    video->clearSentSample();
+//    while(index < buffer.size())
+//    {
+//        NALU_t nalu = video->getNalu(buffer,index);
+//        if(nalu.nal_unit_type == 5){
+//            avStream.value()->publishSample();
+//            video->clearSentSample();
+//        }
+//        video->loadNalu(buffer,index+nalu.startcodeprefix_len,index+nalu.startcodeprefix_len+nalu.len-1);
+//        index = index + nalu.len + nalu.startcodeprefix_len;
+//    }
 }
 
 shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &config, weak_ptr<WebSocket> wws, string id)
 {
-    auto pc = make_shared<PeerConnection>(config);
+    pc = make_shared<PeerConnection>(config);
     auto client = make_shared<Client>(pc);
 
     pc->onStateChange([this,id](PeerConnection::State state) {
@@ -103,7 +112,7 @@ shared_ptr<Client> RtcPublisher::createPeerConnection(const Configuration &confi
         cout << "Video from " << id << " opened" << endl;
     });
 
-    auto dc = pc->createDataChannel("ping-pong");
+    dc = pc->createDataChannel("ping-pong");
     dc->onOpen([id, wdc = make_weak_ptr(dc)]() {
         if (auto dc = wdc.lock()) {
             dc->send("Ping");
@@ -162,7 +171,7 @@ shared_ptr<Stream> RtcPublisher::createStream(const unsigned int fps) {
                 if (rtpConfig->timestampToSeconds(reportElapsedTimestamp) > 1) {
                     trackData->sender->setNeedsToReport();
                 }
-                cout << "Sending " << streamType << " frame with size: " << to_string(sample.size()) << " to " << client << endl;
+                cout << "Sending " << streamType << " sample with size: " << to_string(sample.size()) << " to " << client << endl;
                 bool send = false;
                 try {
                     // send sample
@@ -266,7 +275,8 @@ shared_ptr<ClientTrackData> RtcPublisher::addVideo(const shared_ptr<PeerConnecti
     // create RTP configuration
     auto rtpConfig = make_shared<RtpPacketizationConfig>(ssrc, cname, payloadType, H264RtpPacketizer::defaultClockRate);
     // create packetizer
-    auto packetizer = make_shared<H264RtpPacketizer>(H264RtpPacketizer::Separator::LongStartSequence, rtpConfig);
+    //auto packetizer = make_shared<H264RtpPacketizer>(H264RtpPacketizer::Separator::LongStartSequence, rtpConfig);
+    auto packetizer =make_shared<H264RtpPacketizer>(H264RtpPacketizer::Separator::StartSequence,rtpConfig);
     // create H264 handler
     auto h264Handler = make_shared<H264PacketizationHandler>(packetizer);
     // add RTCP SR handler

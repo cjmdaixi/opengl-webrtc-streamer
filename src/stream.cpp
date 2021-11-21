@@ -95,11 +95,14 @@ void Stream::publishSample() {
     //std::lock_guard lock(mutex);
     if(!isRunning)
         return;
-    auto ssSST = unsafePrepareForSample();
-    auto ss = ssSST.first;
-    auto sst = ssSST.second;
+    auto ss = video;
+    auto sst = StreamSourceType::Video;
     auto sample = ss->getSample();
     sampleHandler(sst,ss->getSampleTime_us(),sample);
+}
+
+void Stream::publishSample2(int id,uint8_t* data,int size) {
+    rtcSendMessage(id, reinterpret_cast<const char *>(data), size);
 }
 
 void Stream::onSample(std::function<void (StreamSourceType, uint64_t, rtc::binary)> handler) {

@@ -31,7 +31,7 @@ public:
     StreamSource() { }
     virtual void start() = 0;
     virtual void stop();
-    virtual void loadNextSample(std::vector<std::byte>& buffer) = 0;
+    virtual void loadNextSample(std::vector<uint8_t>& buffer) = 0;
 
     inline uint64_t getSampleTime_us() { return sampleTime_us; }
     inline rtc::binary getSample() { return sample; }
@@ -62,6 +62,7 @@ private:
     void sendSample();
 public:
     void publishSample();
+    void publishSample2(int id,uint8_t* data,int size);
     void onSample(std::function<void (StreamSourceType, uint64_t, rtc::binary)> handler);
     void start();
     void stop();

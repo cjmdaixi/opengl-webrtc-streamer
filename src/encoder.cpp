@@ -148,12 +148,15 @@ void Encoder::GenOnePkt(uint8_t* buffer,uint8_t** ret_buf,int& ret_buf_size)
 
 void Encoder::DumpLocalVideo()
 {
+    static int count = 2;
     pkt->stream_index = stream->index;
     int er = av_write_frame(ofctx,pkt);
     if(er < 0){
         std::cout<<"write frame error"<<std::endl;
     }
+    if(count == 0) fclose(fout);
     fwrite(pkt->data,1,pkt->size,fout);
+    //count--;
 }
 
 void Encoder::FlushEncoder(int streamIndex)
