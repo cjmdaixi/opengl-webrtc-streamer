@@ -5,13 +5,20 @@ The proj is based on cloud rendering.(云渲染)
 ### 1 Set Up 
 Please make sure ffmpeg is installed first. 
 CentOS and macos is recommended.
-
+And please note that the server file is from libdatachannel repo.
 ```shell
 git submodule update --init --recursive
 cmake -B cmake-build-debug
 cd cmake-build-debug
 make
 ```
+before running the program, please make sure the server is set up. 
+```shell
+cd server
+python3 signaling-server.py
+python3 -m http.server --bind 127.0.0.1 8080
+```
+then just run the program, and open http://127.0.0.1:8080/, and press start.
 
 ### 2 Funcs
 
