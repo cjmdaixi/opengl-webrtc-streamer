@@ -15,6 +15,8 @@ pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
     libavutil
 )
 
+find_package(Freetype REQUIRED)
+
 if(CMAKE_HOST_APPLE)
     add_compile_options(-Wno-deprecated-declarations)
 endif(CMAKE_HOST_APPLE)
@@ -53,5 +55,6 @@ add_executable(
 
 find_package(Threads REQUIRED)
 #target_include_directories(pic2video PRIVATE ${AVCODEC_INCLUDE_DIR} ${AVFORMAT_INCLUDE_DIR} ${AVUTIL_INCLUDE_DIR} ${AVDEVICE_INCLUDE_DIR})
-target_link_libraries(ors ${LIBS} PkgConfig::LIBAV LibDataChannel::LibDataChannel Threads::Threads nlohmann_json)
+target_link_libraries(ors ${LIBS} PkgConfig::LIBAV LibDataChannel::LibDataChannel Threads::Threads nlohmann_json ${FREETYPE_LIBRARIES})
+target_include_directories(ors PUBLIC ${FREETYPE_INCLUDE_DIRS})
 #target_link_libraries(pic2video PRIVATE ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVUTIL_LIBRARY} ${AVDEVICE_LIBRARY})
